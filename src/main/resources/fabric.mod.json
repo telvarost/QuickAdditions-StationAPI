@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "id": "quickadditions",
+  "version": "${version}",
+
+  "name": "QuickAdditions",
+  "description": "Adds in features that were requested, but didn't have enough time to make more real solutions.",
+  "authors": [
+    "Telvarost"
+  ],
+  "contact": {
+    "issues": "https://github.com/telvarost/QuickAdditions-StationAPI/issues",
+    "homepage": "https://github.com/telvarost/QuickAdditions-StationAPI/",
+    "sources": "https://github.com/telvarost/QuickAdditions-StationAPI/"
+  },
+
+  "license": "CC0-1.0",
+  "icon": "assets/quickadditions/icon.png",
+
+  "environment": "*",
+  "entrypoints": {
+    "stationapi:event_bus": [
+      "com.github.telvarost.quickadditions.events.init.RecipeListener"
+    ],
+    "stationapi:event_bus_client": [
+    ],
+    "stationapi:event_bus_server": [
+    ],
+    "gcapi": [
+      "com.github.telvarost.quickadditions.Config"
+    ]
+  },
+  "mixins": [
+    "quickadditions.mixins.json"
+  ],
+
+  "depends": {
+    "minecraft": "1.0.0-beta.7.3"
+  }
+}
