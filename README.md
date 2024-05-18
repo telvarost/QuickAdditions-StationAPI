@@ -20,8 +20,8 @@ A StationAPI mod for Minecraft Beta 1.7.3 that adds some modern Minecraft crafti
 
 ## Images of recipes
 
-### v1.1.0 Recipes
-![apple craft recipe](https://github.com/telvarost/QuickAdditions-StationAPI/blob/main/images/AppleRecipe.PNG)
+### v1.0.0 Recipes
+![soul_sand craft recipe](https://github.com/telvarost/QuickAdditions-StationAPI/blob/main/images/SoulSandRecipe.PNG)
 
 ## Installation using Prism Launcher
 
