@@ -1,6 +1,6 @@
 # QuickAdditions StationAPI Edition for Minecraft Beta 1.7.3
 
-A StationAPI mod for Minecraft Beta 1.7.3 that adds some modern Minecraft crafting recipes.
+A StationAPI mod for Minecraft Beta 1.7.3 that adds in features that were requested, but didn't have enough time to make more real solutions.
 
 **If you're looking for graphical fixes and some QoL see:** https://github.com/telvarost/FinalBeta-StationAPI
 
