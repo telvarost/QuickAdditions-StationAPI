@@ -28,6 +28,9 @@
     ],
     "gcapi": [
       "com.github.telvarost.quickadditions.Config"
+    ],
+    "gcapi:presave": [
+      "com.github.telvarost.quickadditions.events.ConfigListener"
     ]
   },
   "mixins": [

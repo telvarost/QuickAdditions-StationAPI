@@ -8,6 +8,8 @@
   "server": [
   ],
   "client": [
+    "SoundHelperAccessor",
+    "SoundHelperMixin"
   ],
   "injectors": {
     "defaultRequire": 1
