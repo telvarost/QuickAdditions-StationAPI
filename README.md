@@ -19,11 +19,11 @@ Mod now works on Multiplayer with GlassConfigAPI version 2.0+ used to sync confi
 
 ## Installation using Prism Launcher
 
-1. Download an instance of Babric for Prism Launcher: https://github.com/babric/prism-instance
-2. Install Java 17, set the instance to use it, and disable compatibility checks on the instance: https://adoptium.net/temurin/releases/
-3. Add StationAPI to the mod folder for the instance: https://jenkins.glass-launcher.net/job/StationAPI/lastSuccessfulBuild/
-4. (Optional) Add Mod Menu to the mod folder for the instance: https://github.com/calmilamsy/ModMenu/releases
-5. (Optional) Add GlassConfigAPI 2.0+ to the mod folder for the instance: https://maven.glass-launcher.net/#/releases/net/glasslauncher/mods/GlassConfigAPI
+1. Download an instance of Babric for Prism Launcher: https://github.com/telvarost/prism-instance/releases/tag/v0.5.0-candidate
+2. Install Java 17 and set the instance to use it: https://adoptium.net/temurin/releases/
+3. Add StationAPI to the mod folder for the instance: https://modrinth.com/mod/stationapi
+4. (Optional) Add Mod Menu to the mod folder for the instance: https://modrinth.com/mod/modmenu-beta
+5. (Optional) Add GlassConfigAPI 2.0+ to the mod folder for the instance: https://modrinth.com/mod/glass-config-api
 6. Add this mod to the mod folder for the instance: https://github.com/telvarost/QuickAdditions-StationAPI/releases
 7. Run and enjoy! 👍
 
