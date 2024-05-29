@@ -13,6 +13,10 @@ public class Config {
         @Comment("Must be in a world when marking achievements")
         public MissingAchievementsConfig MISSING_ACHIEVEMENTS_CONFIG = new MissingAchievementsConfig();
 
+        @ConfigName("Force Display Active")
+        @Comment("Game will not pause when tabbing away")
+        public Boolean forceDisplayActive = false;
+
         @ConfigName("Music Countdown Random Interval Min")
         @MaxLength(36863)
         @Comment("Default Value: 12000")
