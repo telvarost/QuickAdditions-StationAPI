@@ -14,6 +14,7 @@ A StationAPI mod for Minecraft Beta 1.7.3 that adds in features that were reques
 Mod now works on Multiplayer with GlassConfigAPI version 2.0+ used to sync configs!
 
 * Adds ability to change background music countdown timer min and max interval values.
+* Adds ability to give the player missing achievements that they may have already achieved.
 
 ## List of added recipes
 
