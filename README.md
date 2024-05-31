@@ -7,6 +7,8 @@ Mod now works on Multiplayer with GlassConfigAPI version 2.0+ used to sync confi
 
 * Adds ability to change background music countdown timer min and max interval values.
 * Adds ability to give the player missing achievements that they may have already achieved.
+  * Load into a world and access mod config from pause menu using [ModMenu](https://modrinth.com/mod/modmenu-beta)
+  * Adding back missing achievements will not work from the main menu or when game is not running
 * Adds ability to force display active even when tabbing away from the screen.
 
 ## List of added recipes
