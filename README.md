@@ -5,11 +5,15 @@ A StationAPI mod for Minecraft Beta 1.7.3 that adds in features that were reques
 # Quick Additions
 Mod now works on Multiplayer with GlassConfigAPI version 2.0+ used to sync configs!
 
-* Adds ability to change background music countdown timer min and max interval values.
 * Adds ability to give the player missing achievements that they may have already achieved.
-  * Load into a world and access mod config from pause menu using [ModMenu](https://modrinth.com/mod/modmenu-beta)
-  * Adding back missing achievements will not work from the main menu or when game is not running
+  * Load into a world and access mod config from pause menu using [ModMenu](https://modrinth.com/mod/modmenu-beta).
+  * Adding back missing achievements will not work from the main menu or when game is not running.
 * Adds ability to force display active even when tabbing away from the screen.
+* Adds ability to change background music countdown timer min and max interval values.
+* Adds ability to add custom background music to the game.
+  * On first run of the mod a folder named `custom-music` will be created.
+  * Add `.ogg`, `.mus`, or `.wav` files to this folder, and they will have a random chance to play in-game.
+  * No other file types are supported by default in Minecraft or by this mod.
 
 ## List of added recipes
 
