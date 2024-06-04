@@ -19,6 +19,9 @@
 
   "environment": "*",
   "entrypoints": {
+    "main": [
+      "com.github.telvarost.quickadditions.ModHelper"
+    ],
     "stationapi:event_bus": [
       "com.github.telvarost.quickadditions.events.init.RecipeListener"
     ],
@@ -39,5 +42,13 @@
 
   "depends": {
     "minecraft": "1.0.0-beta.7.3"
+  },
+
+  "custom": {
+    "loom:injected_interfaces": {
+      "net/minecraft/class_54": [
+        "com/github/telvarost/quickadditions/PlayerInterface"
+      ]
+    }
   }
 }

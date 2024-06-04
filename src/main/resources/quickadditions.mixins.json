@@ -4,6 +4,7 @@
   "package": "com.github.telvarost.quickadditions.mixin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
+    "LivingMixin"
   ],
   "server": [
   ],
