@@ -17,6 +17,10 @@ public class Config {
         @Comment("Game will not pause when tabbing away")
         public Boolean forceDisplayActive = false;
 
+        @ConfigName("Minecraft Default Background Music Disabled")
+        @Comment("Restart required for changes to take effect")
+        public Boolean disableDefaultMinecraftBGM = false;
+
         @ConfigName("Music Countdown Random Interval Min")
         @MaxLength(36863)
         @Comment("Default Value: 12000")

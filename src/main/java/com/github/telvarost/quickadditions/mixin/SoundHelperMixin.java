@@ -51,7 +51,7 @@ public abstract class SoundHelperMixin {
                     }
                 }
 
-                File [] musFiles = customMusicDir.listFiles(f-> f.toString().endsWith(".wav"));
+                File [] musFiles = customMusicDir.listFiles(f-> f.toString().endsWith(".mus"));
                 if (null != musFiles) {
                     for (int fileIndex = 0; fileIndex < musFiles.length; fileIndex++) {
                         System.out.println("Added: " + musFiles[fileIndex].getName());

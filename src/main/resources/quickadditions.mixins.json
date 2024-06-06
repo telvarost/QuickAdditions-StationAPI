@@ -9,6 +9,7 @@
   ],
   "client": [
     "GameRendererMixin",
+    "MinecraftMixin",
     "SoundHelperAccessor",
     "SoundHelperMixin"
   ],

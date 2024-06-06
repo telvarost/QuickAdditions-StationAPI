@@ -14,6 +14,7 @@ Mod now works on Multiplayer with GlassConfigAPI version 2.0+ used to sync confi
   * On first run of the mod a folder named `custom-music` will be created.
   * Add `.ogg`, `.mus`, or `.wav` files to this folder, and they will have a random chance to play in-game.
   * No other file types are supported by default in Minecraft or by this mod.
+* Adds ability to disable default Minecraft background music.
 
 ## List of added recipes
 
