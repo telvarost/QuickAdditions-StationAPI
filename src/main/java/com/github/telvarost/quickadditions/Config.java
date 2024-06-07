@@ -13,6 +13,16 @@ public class Config {
         @Comment("Must be in a world when marking achievements")
         public MissingAchievementsConfig MISSING_ACHIEVEMENTS_CONFIG = new MissingAchievementsConfig();
 
+        @ConfigName("Beds Speed Up Night Rather Than Skip It")
+        @MultiplayerSynced
+        @ValueOnVanillaServer(booleanValue = TriBoolean.FALSE)
+        public Boolean bedsSpeedUpNightRatherThanSkipIt = false;
+
+        @ConfigName("Click Or Swing Hand To Exit Beds Enabled")
+        @MultiplayerSynced
+        @ValueOnVanillaServer(booleanValue = TriBoolean.FALSE)
+        public Boolean handSwingClickToExitBedsEnabled = false;
+
         @ConfigName("Force Display Active")
         @Comment("Game will not pause when tabbing away")
         public Boolean forceDisplayActive = false;

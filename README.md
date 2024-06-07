@@ -21,6 +21,9 @@ Mod now works on Multiplayer with GlassConfigAPI version 2.0+ used to sync confi
     * No other file types are supported by default in Minecraft or by this mod.
   * Adds ability to have main menu song override background music.
     * (Vanilla b1.7.3 has Minecraft background music continue to play on main menu if started in-game)
+* Adds ability to speed up night rather than skip it.
+  * (Takes about 30 seconds to sleep the entire night away using this method)
+* Adds ability to exit beds with click or by swinging the hand.
 
 ## List of added recipes
 
