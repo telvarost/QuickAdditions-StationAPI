@@ -13,8 +13,14 @@ Mod now works on Multiplayer with GlassConfigAPI version 2.0+ used to sync confi
 * Adds ability to add custom background music to the game.
   * On first run of the mod a folder named `custom-music` will be created.
   * Add `.ogg`, `.mus`, or `.wav` files to this folder, and they will have a random chance to play in-game.
-  * No other file types are supported by default in Minecraft or by this mod.
+    * No other file types are supported by default in Minecraft or by this mod.
 * Adds ability to disable default Minecraft background music.
+* Adds ability to add a main menu song.
+  * On first run of the mod a folder named `main-menu-theme` will be created.
+  * Add `mainmenu.ogg`, `mainmenu.mus`, or a `mainmenu.wav` file to this folder, this song will play on the title screen.
+    * No other file types are supported by default in Minecraft or by this mod.
+  * Adds ability to have main menu song override background music.
+    * (Vanilla b1.7.3 has Minecraft background music continue to play on main menu if started in-game)
 
 ## List of added recipes
 

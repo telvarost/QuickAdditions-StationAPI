@@ -17,6 +17,13 @@ public class Config {
         @Comment("Game will not pause when tabbing away")
         public Boolean forceDisplayActive = false;
 
+        @ConfigName("Main Menu Theme Enabled")
+        @Comment("Plays 'mainmenu' song file if one is found")
+        public Boolean mainMenuThemeEnabled = true;
+
+        @ConfigName("Main Menu Theme Overrides Background Music")
+        public Boolean mainMenuThemeOverridesBGM = false;
+
         @ConfigName("Minecraft Default Background Music Disabled")
         @Comment("Restart required for changes to take effect")
         public Boolean disableDefaultMinecraftBGM = false;

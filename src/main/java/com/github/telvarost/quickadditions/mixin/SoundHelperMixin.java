@@ -25,22 +25,61 @@ public abstract class SoundHelperMixin {
 
     @Shadow public abstract void addMusic(String string, File file);
 
+    @Shadow public abstract void addStreaming(String string, File file);
+
     @Inject(
             method = "<init>",
             at = @At("RETURN")
     )
     public void SoundHelper(CallbackInfo ci) {
-        File customMusicDir = new File("custom-music");
+        File mainMenuThemeDir = new File("main-menu-theme");
+        if (mainMenuThemeDir.exists()) {
+            if (!mainMenuThemeDir.isDirectory()) {
+                mainMenuThemeDir.delete();
+                mainMenuThemeDir.mkdirs();
+            } else {
+                System.out.println("Looking for mainmenu song in: main-menu-theme/");
 
-        if (customMusicDir.exists())
-        {
-            if (!customMusicDir.isDirectory())
-            {
+                File [] oggFiles = mainMenuThemeDir.listFiles(f-> f.toString().endsWith(".ogg"));
+                if (null != oggFiles) {
+                    for (int fileIndex = 0; fileIndex < oggFiles.length; fileIndex++) {
+                        System.out.println("Added: " + oggFiles[fileIndex].getName());
+                        if (oggFiles[fileIndex].getName().contains("mainmenu")) {
+                            addStreaming(oggFiles[fileIndex].getName(), oggFiles[fileIndex]);
+                        }
+                    }
+                }
+
+                File [] musFiles = mainMenuThemeDir.listFiles(f-> f.toString().endsWith(".mus"));
+                if (null != musFiles) {
+                    for (int fileIndex = 0; fileIndex < musFiles.length; fileIndex++) {
+                        System.out.println("Added: " + musFiles[fileIndex].getName());
+                        if (musFiles[fileIndex].getName().contains("mainmenu")) {
+                            addStreaming(musFiles[fileIndex].getName(), musFiles[fileIndex]);
+                        }
+                    }
+                }
+
+                File [] wavFiles = mainMenuThemeDir.listFiles(f-> f.toString().endsWith(".wav"));
+                if (null != wavFiles) {
+                    for (int fileIndex = 0; fileIndex < wavFiles.length; fileIndex++) {
+                        System.out.println("Added: " + wavFiles[fileIndex].getName());
+                        if (wavFiles[fileIndex].getName().contains("mainmenu")) {
+                            addStreaming(wavFiles[fileIndex].getName(), wavFiles[fileIndex]);
+                        }
+                    }
+                }
+            }
+        } else {
+            mainMenuThemeDir.mkdirs();
+        }
+
+        File customMusicDir = new File("custom-music");
+        if (customMusicDir.exists()) {
+            if (!customMusicDir.isDirectory()) {
                 customMusicDir.delete();
                 customMusicDir.mkdirs();
-            }
-            else
-            {
+            } else {
                 System.out.println("Looking for songs in: custom-music/");
 
                 File [] oggFiles = customMusicDir.listFiles(f-> f.toString().endsWith(".ogg"));
@@ -67,9 +106,7 @@ public abstract class SoundHelperMixin {
                     }
                 }
             }
-        }
-        else
-        {
+        } else {
             customMusicDir.mkdirs();
         }
 
