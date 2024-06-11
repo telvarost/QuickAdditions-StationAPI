@@ -20,7 +20,8 @@ public class MinecraftMixin {
             at = @At(
                     value = "INVOKE",
                     target = "Lnet/minecraft/client/sound/SoundHelper;addMusic(Ljava/lang/String;Ljava/io/File;)V"
-            )
+            ),
+            cancellable = true
     )
     public void loadSoundFromDir(String file, File par2, CallbackInfo ci) {
         if (Config.config.disableDefaultMinecraftBGM) {
