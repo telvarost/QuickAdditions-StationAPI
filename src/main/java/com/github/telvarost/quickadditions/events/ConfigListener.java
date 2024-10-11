@@ -9,7 +9,7 @@ import net.glasslauncher.mods.api.gcapi.api.PreConfigSavedListener;
 import net.mine_diver.unsafeevents.listener.EventListener;
 import net.minecraft.achievement.Achievements;
 import net.minecraft.client.Minecraft;
-import net.minecraft.entity.player.PlayerBase;
+import net.minecraft.entity.player.PlayerEntity;
 import net.modificationstation.stationapi.api.entity.player.PlayerHelper;
 
 import java.util.Random;
@@ -23,9 +23,9 @@ public class ConfigListener implements PreConfigSavedListener {
             Minecraft minecraft = (Minecraft)FabricLoader.getInstance().getGameInstance();
             if (null != minecraft) {
                 Random rand = new Random();
-                ((SoundHelperAccessor)minecraft.soundHelper).setMusicCountdown(rand.nextInt(Config.config.musicCoundownRandomIntervalMax) + Config.config.musicCoundownRandomIntervalMin);
+                ((SoundHelperAccessor)minecraft.soundManager).setMusicCountdown(rand.nextInt(Config.config.musicCoundownRandomIntervalMax) + Config.config.musicCoundownRandomIntervalMin);
 
-                PlayerBase player = PlayerHelper.getPlayerFromGame();
+                PlayerEntity player = PlayerHelper.getPlayerFromGame();
                 if (null != player) {
                     JsonObject missingAchievementsJsonObject = var3.getObject("MISSING_ACHIEVEMENTS_CONFIG");
                     if (null != missingAchievementsJsonObject) {
@@ -45,25 +45,25 @@ public class ConfigListener implements PreConfigSavedListener {
                             player.incrementStat(Achievements.CRAFT_FURNACE);
                         }
                         if (missingAchievementsJsonObject.getBoolean("AQUIRE_IRON", false)) {
-                            player.incrementStat(Achievements.AQUIRE_IRON);
+                            player.incrementStat(Achievements.ACQUIRE_IRON);
                         }
                         if (missingAchievementsJsonObject.getBoolean("CRAFT_HOE", false)) {
                             player.incrementStat(Achievements.CRAFT_HOE);
                         }
                         if (missingAchievementsJsonObject.getBoolean("MAKE_BREAD", false)) {
-                            player.incrementStat(Achievements.MAKE_BREAD);
+                            player.incrementStat(Achievements.CRAFT_BREAD);
                         }
                         if (missingAchievementsJsonObject.getBoolean("BAKE_CAKE", false)) {
-                            player.incrementStat(Achievements.BAKE_CAKE);
+                            player.incrementStat(Achievements.CRAFT_CAKE);
                         }
                         if (missingAchievementsJsonObject.getBoolean("CRAFT_BETTER_PICKAXE", false)) {
-                            player.incrementStat(Achievements.CRAFT_BETTER_PICKAXE);
+                            player.incrementStat(Achievements.CRAFT_STONE_PICKAXE);
                         }
                         if (missingAchievementsJsonObject.getBoolean("COOK_FISH", false)) {
                             player.incrementStat(Achievements.COOK_FISH);
                         }
                         if (missingAchievementsJsonObject.getBoolean("ON_A_RAIL", false)) {
-                            player.incrementStat(Achievements.ON_A_RAIL);
+                            player.incrementStat(Achievements.CRAFT_RAIL);
                         }
                         if (missingAchievementsJsonObject.getBoolean("CRAFT_SWORD", false)) {
                             player.incrementStat(Achievements.CRAFT_SWORD);

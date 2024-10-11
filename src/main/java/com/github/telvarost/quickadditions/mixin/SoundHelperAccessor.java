@@ -2,25 +2,25 @@ package com.github.telvarost.quickadditions.mixin;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.sound.SoundHelper;
-import net.minecraft.client.sound.SoundMap;
+import net.minecraft.client.sound.SoundEntry;
+import net.minecraft.client.sound.SoundManager;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.gen.Accessor;
 import paulscode.sound.SoundSystem;
 
 @Environment(EnvType.CLIENT)
-@Mixin(SoundHelper.class)
+@Mixin(SoundManager.class)
 public interface SoundHelperAccessor {
 
     /** - Getters */
     @Accessor("soundSystem")
     SoundSystem getSoundSystem();
-    @Accessor("streaming")
-    SoundMap getStreaming();
-    @Accessor("initialized")
+    @Accessor("streamingSounds")
+    SoundEntry getStreaming();
+    @Accessor("started")
     boolean getInitialized();
 
     /** - Setters */
-    @Accessor("musicCountdown")
+    @Accessor("timeUntilNextSong")
     public void setMusicCountdown(int musicCountdown);
 }

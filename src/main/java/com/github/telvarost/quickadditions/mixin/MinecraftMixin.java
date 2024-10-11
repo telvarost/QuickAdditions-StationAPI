@@ -16,10 +16,10 @@ import java.io.File;
 public class MinecraftMixin {
 
     @Inject(
-            method = "loadSoundFromDir",
+            method = "loadResource",
             at = @At(
                     value = "INVOKE",
-                    target = "Lnet/minecraft/client/sound/SoundHelper;addMusic(Ljava/lang/String;Ljava/io/File;)V"
+                    target = "Lnet/minecraft/client/sound/SoundManager;loadMusic(Ljava/lang/String;Ljava/io/File;)V"
             ),
             cancellable = true
     )

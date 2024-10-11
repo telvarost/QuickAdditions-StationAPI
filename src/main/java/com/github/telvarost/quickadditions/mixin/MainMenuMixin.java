@@ -3,10 +3,10 @@ package com.github.telvarost.quickadditions.mixin;
 import com.github.telvarost.quickadditions.Config;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.gui.screen.ScreenBase;
-import net.minecraft.client.gui.screen.menu.MainMenu;
+import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.gui.screen.TitleScreen;
+import net.minecraft.client.sound.Sound;
 import net.minecraft.client.sound.SoundEntry;
-import net.minecraft.client.sound.SoundMap;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
@@ -16,10 +16,10 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import paulscode.sound.SoundSystem;
 
 @Environment(EnvType.CLIENT)
-@Mixin(MainMenu.class)
-public class MainMenuMixin extends ScreenBase {
+@Mixin(TitleScreen.class)
+public class MainMenuMixin extends Screen {
 
-    @Shadow private float ticksOpened;
+    @Shadow private float ticks;
 
     @Inject(
             method = "init",
@@ -27,7 +27,7 @@ public class MainMenuMixin extends ScreenBase {
             cancellable = true
     )
     public void init(CallbackInfo ci) {
-        if (ticksOpened <= 0) {
+        if (ticks <= 0) {
             if (Config.config.mainMenuThemeEnabled) {
                 playMainMenuTheme();
             }
@@ -36,11 +36,11 @@ public class MainMenuMixin extends ScreenBase {
 
     @Unique
     private void playMainMenuTheme() {
-        SoundSystem soundSystem = ((SoundHelperAccessor)minecraft.soundHelper).getSoundSystem();
-        SoundMap streaming = ((SoundHelperAccessor)minecraft.soundHelper).getStreaming();
-        boolean initialized = ((SoundHelperAccessor)minecraft.soundHelper).getInitialized();
-        if (initialized && minecraft.options.music != 0.0F) {
-            SoundEntry var1 = streaming.getRandomSoundForId("mainmenu");
+        SoundSystem soundSystem = ((SoundHelperAccessor)minecraft.soundManager).getSoundSystem();
+        SoundEntry streaming = ((SoundHelperAccessor)minecraft.soundManager).getStreaming();
+        boolean initialized = ((SoundHelperAccessor)minecraft.soundManager).getInitialized();
+        if (initialized && minecraft.options.musicVolume != 0.0F) {
+            Sound var1 = streaming.get("mainmenu");
             if (var1 != null) {
                 if (Config.config.mainMenuThemeOverridesBGM) {
                     if (soundSystem.playing("BgMusic")) {
@@ -51,8 +51,8 @@ public class MainMenuMixin extends ScreenBase {
                 if (  (!soundSystem.playing("BgMusic") || Config.config.mainMenuThemeOverridesBGM)
                    && !soundSystem.playing("streaming")
                    ) {
-                    soundSystem.backgroundMusic("streaming", var1.soundUrl, var1.soundName, false);
-                    soundSystem.setVolume("streaming", minecraft.options.music);
+                    soundSystem.backgroundMusic("streaming", var1.soundFile, var1.id, false);
+                    soundSystem.setVolume("streaming", minecraft.options.musicVolume);
                     soundSystem.play("streaming");
                 }
             }

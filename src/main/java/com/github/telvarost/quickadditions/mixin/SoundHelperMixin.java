@@ -3,7 +3,7 @@ package com.github.telvarost.quickadditions.mixin;
 import com.github.telvarost.quickadditions.Config;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.sound.SoundHelper;
+import net.minecraft.client.sound.SoundManager;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -16,16 +16,16 @@ import java.io.File;
 import java.util.Random;
 
 @Environment(EnvType.CLIENT)
-@Mixin(SoundHelper.class)
+@Mixin(SoundManager.class)
 public abstract class SoundHelperMixin {
 
-    @Shadow private int musicCountdown;
+    @Shadow private int timeUntilNextSong;
 
-    @Shadow private Random rand;
+    @Shadow private Random random;
 
-    @Shadow public abstract void addMusic(String string, File file);
+    @Shadow public abstract void loadMusic(String string, File file);
 
-    @Shadow public abstract void addStreaming(String string, File file);
+    @Shadow public abstract void loadStreaming(String string, File file);
 
     @Inject(
             method = "<init>",
@@ -45,7 +45,7 @@ public abstract class SoundHelperMixin {
                     for (int fileIndex = 0; fileIndex < oggFiles.length; fileIndex++) {
                         System.out.println("Added: " + oggFiles[fileIndex].getName());
                         if (oggFiles[fileIndex].getName().contains("mainmenu")) {
-                            addStreaming(oggFiles[fileIndex].getName(), oggFiles[fileIndex]);
+                            loadStreaming(oggFiles[fileIndex].getName(), oggFiles[fileIndex]);
                         }
                     }
                 }
@@ -55,7 +55,7 @@ public abstract class SoundHelperMixin {
                     for (int fileIndex = 0; fileIndex < musFiles.length; fileIndex++) {
                         System.out.println("Added: " + musFiles[fileIndex].getName());
                         if (musFiles[fileIndex].getName().contains("mainmenu")) {
-                            addStreaming(musFiles[fileIndex].getName(), musFiles[fileIndex]);
+                            loadStreaming(musFiles[fileIndex].getName(), musFiles[fileIndex]);
                         }
                     }
                 }
@@ -65,7 +65,7 @@ public abstract class SoundHelperMixin {
                     for (int fileIndex = 0; fileIndex < wavFiles.length; fileIndex++) {
                         System.out.println("Added: " + wavFiles[fileIndex].getName());
                         if (wavFiles[fileIndex].getName().contains("mainmenu")) {
-                            addStreaming(wavFiles[fileIndex].getName(), wavFiles[fileIndex]);
+                            loadStreaming(wavFiles[fileIndex].getName(), wavFiles[fileIndex]);
                         }
                     }
                 }
@@ -86,7 +86,7 @@ public abstract class SoundHelperMixin {
                 if (null != oggFiles) {
                     for (int fileIndex = 0; fileIndex < oggFiles.length; fileIndex++) {
                         System.out.println("Added: " + oggFiles[fileIndex].getName());
-                        addMusic(oggFiles[fileIndex].getName(), oggFiles[fileIndex]);
+                        loadMusic(oggFiles[fileIndex].getName(), oggFiles[fileIndex]);
                     }
                 }
 
@@ -94,7 +94,7 @@ public abstract class SoundHelperMixin {
                 if (null != musFiles) {
                     for (int fileIndex = 0; fileIndex < musFiles.length; fileIndex++) {
                         System.out.println("Added: " + musFiles[fileIndex].getName());
-                        addMusic(musFiles[fileIndex].getName(), musFiles[fileIndex]);
+                        loadMusic(musFiles[fileIndex].getName(), musFiles[fileIndex]);
                     }
                 }
 
@@ -102,7 +102,7 @@ public abstract class SoundHelperMixin {
                 if (null != wavFiles) {
                     for (int fileIndex = 0; fileIndex < wavFiles.length; fileIndex++) {
                         System.out.println("Added: " + wavFiles[fileIndex].getName());
-                        addMusic(wavFiles[fileIndex].getName(), wavFiles[fileIndex]);
+                        loadMusic(wavFiles[fileIndex].getName(), wavFiles[fileIndex]);
                     }
                 }
             }
@@ -110,11 +110,11 @@ public abstract class SoundHelperMixin {
             customMusicDir.mkdirs();
         }
 
-        this.musicCountdown = this.rand.nextInt(Config.config.musicCoundownRandomIntervalMax);
+        this.timeUntilNextSong = this.random.nextInt(Config.config.musicCoundownRandomIntervalMax);
     }
 
     @ModifyConstant(
-            method = "handleBackgroundMusic",
+            method = "tick",
             constant = @Constant(
                     intValue = 12000,
                     ordinal = 0
@@ -126,7 +126,7 @@ public abstract class SoundHelperMixin {
 
 
     @ModifyConstant(
-            method = "handleBackgroundMusic",
+            method = "tick",
             constant = @Constant(
                     intValue = 12000,
                     ordinal = 1

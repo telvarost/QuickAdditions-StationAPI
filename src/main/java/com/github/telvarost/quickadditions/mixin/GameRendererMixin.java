@@ -4,7 +4,7 @@ import com.github.telvarost.quickadditions.Config;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.Minecraft;
-import net.minecraft.sortme.GameRenderer;
+import net.minecraft.client.render.GameRenderer;
 import org.lwjgl.opengl.Display;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -15,15 +15,15 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 public class GameRendererMixin {
 
     @Redirect(
-            method = "method_1844",
+            method = "onFrameUpdate",
             at = @At(
                     value = "INVOKE",
-                    target = "Lnet/minecraft/client/Minecraft;openPauseMenu()V"
+                    target = "Lnet/minecraft/client/Minecraft;pauseGame()V"
             )
     )
     public void quickAdditions_method_1844(Minecraft instance) {
         if (!Config.config.forceDisplayActive) {
-            instance.openPauseMenu();
+            instance.pauseGame();
         }
     }
 }
