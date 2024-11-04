@@ -1,7 +1,7 @@
 package com.github.telvarost.quickadditions.mixin;
 
 import com.github.telvarost.quickadditions.Config;
-import net.minecraft.class_567;
+import net.minecraft.world.NaturalSpawner;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldProperties;
 import org.spongepowered.asm.mixin.Mixin;
@@ -36,7 +36,7 @@ public abstract class LevelMixin {
             if (instance.canSkipNight()) {
                 boolean var1 = false;
                 if (this.allowMonsterSpawning && this.difficulty >= 1) {
-                    var1 = class_567.method_1869(instance, this.players);
+                    var1 = NaturalSpawner.spawnMonstersAndWakePlayers(instance, this.players);
                 }
 
                 if (!var1) {

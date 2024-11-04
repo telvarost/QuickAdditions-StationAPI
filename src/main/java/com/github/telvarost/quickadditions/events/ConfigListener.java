@@ -1,16 +1,17 @@
 package com.github.telvarost.quickadditions.events;
 
-import blue.endless.jankson.JsonObject;
 import com.github.telvarost.quickadditions.Config;
 import com.github.telvarost.quickadditions.mixin.SoundHelperAccessor;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.loader.api.FabricLoader;
-import net.glasslauncher.mods.api.gcapi.api.PreConfigSavedListener;
+import net.glasslauncher.mods.gcapi3.api.PreConfigSavedListener;
+import net.glasslauncher.mods.gcapi3.impl.GlassYamlFile;
 import net.mine_diver.unsafeevents.listener.EventListener;
 import net.minecraft.achievement.Achievements;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.PlayerEntity;
 import net.modificationstation.stationapi.api.entity.player.PlayerHelper;
+import org.simpleyaml.configuration.ConfigurationSection;
 
 import java.util.Random;
 
@@ -18,7 +19,8 @@ import java.util.Random;
 public class ConfigListener implements PreConfigSavedListener {
 
     @Override
-    public void onPreConfigSaved(int var1, JsonObject var2, JsonObject var3) {
+    public void onPreConfigSaved(int source, GlassYamlFile oldValues, GlassYamlFile newValues)
+    {
         if(FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT){
             Minecraft minecraft = (Minecraft)FabricLoader.getInstance().getGameInstance();
             if (null != minecraft) {
@@ -27,7 +29,7 @@ public class ConfigListener implements PreConfigSavedListener {
 
                 PlayerEntity player = PlayerHelper.getPlayerFromGame();
                 if (null != player) {
-                    JsonObject missingAchievementsJsonObject = var3.getObject("MISSING_ACHIEVEMENTS_CONFIG");
+                    ConfigurationSection missingAchievementsJsonObject = newValues.getConfigurationSection("MISSING_ACHIEVEMENTS_CONFIG");
                     if (null != missingAchievementsJsonObject) {
                         if (missingAchievementsJsonObject.getBoolean("OPEN_INVENTORY", false)) {
                             player.incrementStat(Achievements.OPEN_INVENTORY);
