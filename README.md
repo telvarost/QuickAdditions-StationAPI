@@ -24,6 +24,9 @@ Mod now works on Multiplayer with GlassConfigAPI version 2.0+ used to sync confi
 * Adds ability to speed up night rather than skip it.
   * (Takes about 30 seconds to sleep the entire night away using this method)
 * Adds ability to exit beds by clicking or swinging the hand.
+* Adds ability to change max mob spawn capacity for different creature types.
+  * Monster, passive (animals), and squid max spawn capacity can be changed.
+* Adds ability to change mob spawn group size.
 
 ## List of added recipes
 
