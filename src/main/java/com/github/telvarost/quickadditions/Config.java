@@ -75,6 +75,35 @@ public class Config {
                 maxLength = 16
         )
         public Integer SOUL_SAND_OUTPUT = 4;
+
+        @ConfigEntry(
+                name = "Spawn Group Size",
+                description = "Does not effect ghasts, wolves cap at 8",
+                multiplayerSynced = true,
+                maxLength = 16
+        )
+        public Integer SPAWN_GROUP_SIZE = 4;
+
+        @ConfigEntry(
+                name = "Spawn Capacity Max: Monster",
+                multiplayerSynced = true,
+                maxLength = 255
+        )
+        public Integer MAX_SPAWN_CAPACITY_MONSTER = 70;
+
+        @ConfigEntry(
+                name = "Spawn Capacity Max: Passive",
+                multiplayerSynced = true,
+                maxLength = 255
+        )
+        public Integer MAX_SPAWN_CAPACITY_PASSIVE = 15;
+
+        @ConfigEntry(
+                name = "Spawn Capacity Max: Squid",
+                multiplayerSynced = true,
+                maxLength = 255
+        )
+        public Integer MAX_SPAWN_CAPACITY_SQUID = 5;
     }
 
     public static class MissingAchievementsConfig {
