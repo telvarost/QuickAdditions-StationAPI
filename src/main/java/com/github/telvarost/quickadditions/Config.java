@@ -66,7 +66,7 @@ public class Config {
                 description = "Restart required for changes to take effect",
                 multiplayerSynced = true
         )
-        public Boolean ENABLE_SOUL_SAND_RECIPE = true;
+        public Boolean ENABLE_SOUL_SAND_RECIPE = false;
 
         @ConfigEntry(
                 name = "Soul Sand Recipe Output: 1-16",
