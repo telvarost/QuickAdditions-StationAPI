@@ -27,6 +27,7 @@ Mod now works on Multiplayer with GlassConfigAPI version 2.0+ used to sync confi
 * Adds ability to change max mob spawn capacity for different creature types.
   * Monster, passive (animals), and squid max spawn capacity can be changed.
 * Adds ability to change mob spawn group size.
+* Adds ability to set a Y level above which it will always snow.
 
 ## List of added recipes
 

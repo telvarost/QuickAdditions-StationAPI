@@ -15,6 +15,19 @@ public class Config {
         public MissingAchievementsConfig MISSING_ACHIEVEMENTS_CONFIG = new MissingAchievementsConfig();
 
         @ConfigEntry(
+                name = "Always Snow Above Set Y Level Enabled",
+                multiplayerSynced = true
+        )
+        public Boolean enableAlwaysSnowAboveSetYLevel = false;
+
+        @ConfigEntry(
+                name = "Always Snow Above This Y Level",
+                multiplayerSynced = true,
+                maxLength = 256
+        )
+        public Integer alwaysSnowAboveThisYLevel = 96;
+
+        @ConfigEntry(
                 name = "Beds Speed Up Night Rather Than Skip It",
                 multiplayerSynced = true
         )
