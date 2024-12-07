@@ -4,7 +4,6 @@
   "package": "com.github.telvarost.quickadditions.mixin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
-    "LevelMixin",
     "LivingEntityMixin",
     "NaturalSpawnerMixin",
     "PlayerBaseMixin",

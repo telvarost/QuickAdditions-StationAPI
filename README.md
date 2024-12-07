@@ -28,6 +28,8 @@ Mod now works on Multiplayer with GlassConfigAPI version 2.0+ used to sync confi
   * Monster, passive (animals), and squid max spawn capacity can be changed.
 * Adds ability to change mob spawn group size.
 * Adds ability to set a Y level above which it will always snow.
+* Adds ability to cancel weather reset when sleeping and the weather is clear.
+  * This makes rain and snow more common.
 
 ## List of added recipes
 

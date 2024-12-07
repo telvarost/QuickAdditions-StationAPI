@@ -75,6 +75,12 @@ public class Config {
         public Integer musicCoundownRandomIntervalMax = 12000;
 
         @ConfigEntry(
+                name = "Sleep Only Resets Weather When Raining",
+                multiplayerSynced = true
+        )
+        public Boolean sleepOnlyResetsWeatherWhenRaining = false;
+
+        @ConfigEntry(
                 name = "Soul Sand Crafting Recipe Enable",
                 description = "Restart required for changes to take effect",
                 multiplayerSynced = true
