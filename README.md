@@ -23,7 +23,7 @@ Mod now works on Multiplayer with GlassConfigAPI version 2.0+ used to sync confi
       * See full list of vanilla b1.7.3 biomes below
     * All tag names MUST be lowercase to work and have the `-` symbol on either side of the tag.
       * Example song name: `HappyDisco-nether-rainforest-specific.ogg`
-        * This song would play only in the nether and in the rainforest biome.
+        * This song would only play in the nether and in the rainforest biome.
 * Adds ability to disable default Minecraft background music.
 * Adds ability to add a main menu song.
   * On first run of the mod a folder named `main-menu-theme` will be created.
@@ -41,7 +41,16 @@ Mod now works on Multiplayer with GlassConfigAPI version 2.0+ used to sync confi
 * Adds ability to cancel weather reset when sleeping and the weather is clear.
   * This makes rain and snow more common.
 
-## b1.7.3 Biomes
+## List of added recipes
+
+* Craftable soul sand.
+
+## Images of recipes
+
+### v1.0.0 Recipes
+![soul_sand craft recipe](https://github.com/telvarost/QuickAdditions-StationAPI/blob/main/images/SoulSandRecipe.PNG)
+
+## List of b1.7.3 Biomes
 
 * Rainforest -> biome tag = `-rainforest-`
 * Swampland -> biome tag = `-swampland-`
@@ -57,15 +66,6 @@ Mod now works on Multiplayer with GlassConfigAPI version 2.0+ used to sync confi
 * Hell -> biome tag = `-hell-` this is the biome that the nether uses
 * Sky -> biome tag = `-sky-` this is the biome that the skylands uses
 * ModdedBiome -> biome tag = `-moddedbiome-` modded biomes are supported just make the biome name lowercase as a tag!
-
-## List of added recipes
-
-* Craftable soul sand.
-
-## Images of recipes
-
-### v1.0.0 Recipes
-![soul_sand craft recipe](https://github.com/telvarost/QuickAdditions-StationAPI/blob/main/images/SoulSandRecipe.PNG)
 
 ## Installation using Prism Launcher
 
