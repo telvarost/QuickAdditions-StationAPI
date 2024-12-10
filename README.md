@@ -23,7 +23,7 @@ Mod now works on Multiplayer with GlassConfigAPI version 3.0+ used to sync confi
       * See full list of vanilla b1.7.3 biomes below
     * All tag names MUST be lowercase to work and have the `-` symbol on either side of the tag.
       * Example song name: `HappyDisco-nether-rainforest-specific.ogg`
-        * This song would only play in the nether and in the rainforest biome.
+        * This song would play in the nether or in the rainforest biome.
 * Adds ability to disable default Minecraft background music.
 * Adds ability to add a main menu song.
   * On first run of the mod a folder named `main-menu-theme` will be created.
