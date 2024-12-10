@@ -3,7 +3,7 @@
 A StationAPI mod for Minecraft Beta 1.7.3 that adds in features that were requested, but didn't have enough time to make a full fledged mod for the request.
 
 # Quick Additions
-Mod now works on Multiplayer with GlassConfigAPI version 2.0+ used to sync configs!
+Mod now works on Multiplayer with GlassConfigAPI version 3.0+ used to sync configs!
 
 * Adds ability to give the player missing achievements that they may have already achieved.
   * Load into a world and access mod config from pause menu using [ModMenu](https://modrinth.com/mod/modmenu-beta).
