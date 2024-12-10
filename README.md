@@ -17,7 +17,7 @@ Mod now works on Multiplayer with GlassConfigAPI version 2.0+ used to sync confi
   * You can make the added songs only play in certain dimensions or biomes by adding specific tags to the song name.
     * Firstly the song must end with `-specific.XXX` where `XXX` is one of the three acceptable file types `ogg`, `mus`, or `wav`.
     * Then simply specify which dimension using `-overworld-`, `-nether-`, or `-levelX-` in the song name.
-      * In `-levelX-`, `X` is the numerical value of the level ID.
+      * Where `X` in `-levelX-` is the numerical value of the level ID.
       * (nether = `-1`, overworld = `0`, skylands = `1`, modded-dimension = some number greater than 1 probably)
     * You can also make songs biome specific by specifying the biome with a biome tag such as `-tundra-` or `-savanna-`.
       * See full list of vanilla b1.7.3 biomes below
