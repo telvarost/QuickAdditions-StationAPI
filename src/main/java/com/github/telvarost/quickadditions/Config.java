@@ -14,18 +14,10 @@ public class Config {
         )
         public MissingAchievementsConfig MISSING_ACHIEVEMENTS_CONFIG = new MissingAchievementsConfig();
 
-        @ConfigEntry(
-                name = "Always Snow Above Set Y Level Enabled",
-                multiplayerSynced = true
+        @ConfigCategory(
+                name = "Weather Config"
         )
-        public Boolean enableAlwaysSnowAboveSetYLevel = false;
-
-        @ConfigEntry(
-                name = "Always Snow Above This Y Level",
-                multiplayerSynced = true,
-                maxLength = 256
-        )
-        public Integer alwaysSnowAboveThisYLevel = 96;
+        public WeatherConfig WEATHER_CONFIG = new WeatherConfig();
 
         @ConfigEntry(
                 name = "Beds Speed Up Night Rather Than Skip It",
@@ -63,22 +55,16 @@ public class Config {
         @ConfigEntry(
                 name = "Music Countdown Random Interval Min",
                 description = "Default Value: 12000",
-                maxLength = 36863
+                maxLength = Integer.MAX_VALUE
         )
         public Integer musicCoundownRandomIntervalMin = 12000;
 
         @ConfigEntry(
                 name = "Music Countdown Random Interval Max",
                 description = "Default Value: 12000",
-                maxLength = 36863
+                maxLength = Integer.MAX_VALUE
         )
         public Integer musicCoundownRandomIntervalMax = 12000;
-
-        @ConfigEntry(
-                name = "Sleep Only Resets Weather When Raining",
-                multiplayerSynced = true
-        )
-        public Boolean sleepOnlyResetsWeatherWhenRaining = false;
 
         @ConfigEntry(
                 name = "Soul Sand Crafting Recipe Enable",
@@ -123,6 +109,91 @@ public class Config {
                 maxLength = 255
         )
         public Integer MAX_SPAWN_CAPACITY_SQUID = 5;
+    }
+
+    public static class WeatherConfig {
+        @ConfigEntry(
+                name = "Always Snow Above Set Y Level Enabled",
+                multiplayerSynced = true
+        )
+        public Boolean enableAlwaysSnowAboveSetYLevel = false;
+
+        @ConfigEntry(
+                name = "Always Snow Above This Y Level",
+                multiplayerSynced = true,
+                maxLength = 256
+        )
+        public Integer alwaysSnowAboveThisYLevel = 100;
+
+        @ConfigEntry(
+                name = "Sleep Only Resets Weather When Raining",
+                multiplayerSynced = true
+        )
+        public Boolean sleepOnlyResetsWeatherWhenRaining = false;
+
+        @ConfigEntry(
+                name = "Time Until Rain: Random Limit",
+                description = "Added to minimum to find rain time",
+                multiplayerSynced = true,
+                maxLength = Integer.MAX_VALUE
+        )
+        public Integer timeUntilRainRandomLimit = 168000;
+
+        @ConfigEntry(
+                name = "Time Until Rain: Minimum",
+                description = "Minimum time in ticks until rain occurs",
+                multiplayerSynced = true,
+                maxLength = Integer.MAX_VALUE
+        )
+        public Integer timeUntilRainMinimum = 12000;
+
+        @ConfigEntry(
+                name = "Time Rain Duration: Random Limit",
+                description = "Added to minimum to find rain duration",
+                multiplayerSynced = true,
+                maxLength = Integer.MAX_VALUE
+        )
+        public Integer rainDurationRandomLimit = 12000;
+
+        @ConfigEntry(
+                name = "Time Rain Duration: Minimum",
+                description = "Minimum time in ticks until rain ends",
+                multiplayerSynced = true,
+                maxLength = Integer.MAX_VALUE
+        )
+        public Integer rainDurationMinimum = 12000;
+
+        @ConfigEntry(
+                name = "Time Until Thunder: Random Limit",
+                description = "Added to minimum to find thunder time",
+                multiplayerSynced = true,
+                maxLength = Integer.MAX_VALUE
+        )
+        public Integer timeUntilThunderRandomLimit = 168000;
+
+        @ConfigEntry(
+                name = "Time Until Thunder: Minimum",
+                description = "Minimum time in ticks until thunder occurs",
+                multiplayerSynced = true,
+                maxLength = Integer.MAX_VALUE
+        )
+        public Integer timeUntilThunderMinimum = 12000;
+
+        @ConfigEntry(
+                name = "Time Thunder Duration: Random Limit",
+                description = "Added to minimum to find thunder duration",
+                multiplayerSynced = true,
+                maxLength = Integer.MAX_VALUE
+        )
+        public Integer thunderDurationRandomLimit = 12000;
+
+        @ConfigEntry(
+                name = "Time Thunder Duration: Minimum",
+                description = "Minimum time in ticks until thunder ends",
+                multiplayerSynced = true,
+                maxLength = Integer.MAX_VALUE
+        )
+        public Integer thunderDurationMinimum = 3600;
     }
 
     public static class MissingAchievementsConfig {

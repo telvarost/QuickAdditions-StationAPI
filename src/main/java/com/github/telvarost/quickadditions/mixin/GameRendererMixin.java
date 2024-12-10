@@ -65,8 +65,8 @@ public class GameRendererMixin {
     private boolean quickAdditions_renderSnow(Biome instance) {
         boolean allowSnow = instance.canSnow();
 
-        if (Config.config.enableAlwaysSnowAboveSetYLevel) {
-            if (Config.config.alwaysSnowAboveThisYLevel < this.client.world.getTopSolidBlockY(currentX, currentY)) {
+        if (Config.config.WEATHER_CONFIG.enableAlwaysSnowAboveSetYLevel) {
+            if (Config.config.WEATHER_CONFIG.alwaysSnowAboveThisYLevel < this.client.world.getTopSolidBlockY(currentX, currentY)) {
                 allowSnow = true;
             }
         }
@@ -99,8 +99,8 @@ public class GameRendererMixin {
     private boolean quickAdditions_renderRain(Biome instance) {
         boolean allowRain = instance.canRain();
 
-        if (Config.config.enableAlwaysSnowAboveSetYLevel) {
-            if (Config.config.alwaysSnowAboveThisYLevel < this.client.world.getTopSolidBlockY(currentX, currentY)) {
+        if (Config.config.WEATHER_CONFIG.enableAlwaysSnowAboveSetYLevel) {
+            if (Config.config.WEATHER_CONFIG.alwaysSnowAboveThisYLevel < this.client.world.getTopSolidBlockY(currentX, currentY)) {
                 allowRain = false;
             }
         }
@@ -132,8 +132,8 @@ public class GameRendererMixin {
     private boolean quickAdditions_tick(Biome instance) {
         boolean allowRain = instance.canRain();
 
-        if (Config.config.enableAlwaysSnowAboveSetYLevel) {
-            if (Config.config.alwaysSnowAboveThisYLevel < highestBlockYLocation) {
+        if (Config.config.WEATHER_CONFIG.enableAlwaysSnowAboveSetYLevel) {
+            if (Config.config.WEATHER_CONFIG.alwaysSnowAboveThisYLevel < highestBlockYLocation) {
                 allowRain = false;
             }
         }
