@@ -3,7 +3,12 @@ package com.github.telvarost.quickadditions.mixin;
 import com.github.telvarost.quickadditions.Config;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.minecraft.client.sound.Sound;
+import net.minecraft.client.sound.SoundEntry;
 import net.minecraft.client.sound.SoundManager;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.world.biome.Biome;
+import net.modificationstation.stationapi.api.entity.player.PlayerHelper;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -22,6 +27,8 @@ public abstract class SoundHelperMixin {
     @Shadow private int timeUntilNextSong;
 
     @Shadow private Random random;
+
+    @Shadow private SoundEntry music;
 
     @Shadow public abstract void loadMusic(String string, File file);
 
@@ -111,6 +118,61 @@ public abstract class SoundHelperMixin {
         }
 
         this.timeUntilNextSong = this.random.nextInt(Config.config.musicCoundownRandomIntervalMax);
+    }
+
+    @Inject(
+            method = "tick",
+            at = @At(
+                    value = "INVOKE",
+                    target = "Lnet/minecraft/client/sound/SoundEntry;getSounds()Lnet/minecraft/client/sound/Sound;"
+            ),
+            cancellable = true
+    )
+    public void tick(CallbackInfo ci) {
+        PlayerEntity player = PlayerHelper.getPlayerFromGame();
+        Sound currentMusic = this.music.getSounds();
+
+        if (  (null != player)
+           && (null != currentMusic)
+           && (null != currentMusic.id)
+           && (12 < currentMusic.id.length())
+        ) {
+            String songName = currentMusic.id.substring(0, currentMusic.id.length() - 3);
+
+            if (songName.endsWith("-specific.")) {
+                String levelTag = "-level" + player.dimensionId + '-';
+                String biomeTag = "-unknown-";
+
+                if (songName.contains(levelTag)) {
+                    return;
+                }
+
+                if (0 == player.dimensionId) {
+                    if (songName.contains("-overworld-")) {
+                        return;
+                    }
+                } else if (-1 == player.dimensionId) {
+                    if (songName.contains("-nether-")) {
+                        return;
+                    }
+                }
+
+                if (null != player.world) {
+                    if (null != player.world.method_1781()) {
+                        Biome biome = player.world.method_1781().getBiome((int)Math.floor(player.x), (int)Math.floor(player.z));
+                        if (null != biome && null != biome.name) {
+                            biomeTag = '-' + biome.name.toLowerCase() + '-';
+                        }
+                    }
+                }
+
+                if (songName.contains(biomeTag)) {
+                    return;
+                }
+
+                ci.cancel();
+            }
+        }
     }
 
     @ModifyConstant(

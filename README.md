@@ -14,6 +14,16 @@ Mod now works on Multiplayer with GlassConfigAPI version 2.0+ used to sync confi
   * On first run of the mod a folder named `custom-music` will be created.
   * Add `.ogg`, `.mus`, or `.wav` files to this folder, and they will have a random chance to play in-game.
     * No other file types are supported by default in Minecraft or by this mod.
+  * You can make the added songs only play in certain dimensions or biomes by adding specific tags to the song name.
+    * Firstly the song must end with `-specific.XXX` where `XXX` is one of the three acceptable file types `ogg`, `mus`, or `wav`.
+    * Then simply specify which dimension using `-overworld-`, `-nether-`, or `-levelX-` in the song name.
+      * In `-levelX-`, `X` is the numerical value of the level ID.
+      * (nether = `-1`, overworld = `0`, skylands = `1`, modded-dimension = some number greater than 1 probably)
+    * You can also make songs biome specific by specifying the biome with a biome tag such as `-tundra-` or `-savanna-`.
+      * See full list of vanilla b1.7.3 biomes below
+    * All tag names MUST be lowercase to work and have the `-` symbol on either side of the tag.
+      * Example song name: `HappyDisco-nether-rainforest-specific.ogg`
+        * This song would play only in the nether and in the rainforest biome.
 * Adds ability to disable default Minecraft background music.
 * Adds ability to add a main menu song.
   * On first run of the mod a folder named `main-menu-theme` will be created.
@@ -30,6 +40,23 @@ Mod now works on Multiplayer with GlassConfigAPI version 2.0+ used to sync confi
 * Adds ability to set a Y level above which it will always snow.
 * Adds ability to cancel weather reset when sleeping and the weather is clear.
   * This makes rain and snow more common.
+
+## b1.7.3 Biomes
+
+* Rainforest -> biome tag = `-rainforest-`
+* Swampland -> biome tag = `-swampland-`
+* Seasonal Forest -> biome tag = `-seasonal forest-`
+* Forest -> biome tag = `-forest-`
+* Savanna -> biome tag = `-savanna-`
+* Shrubland -> biome tag = `-shrubland-`
+* Taiga -> biome tag = `-taiga-`
+* Desert -> biome tag = `-desert-`
+* Plains -> biome tag = `-plains-`
+* Ice Desert -> biome tag = `-ice desert-`
+* Tundra -> biome tag = `-tundra-`
+* Hell -> biome tag = `-hell-` this is the biome that the nether uses
+* Sky -> biome tag = `-sky-` this is the biome that the skylands uses
+* ModdedBiome -> biome tag = `-moddedbiome-` modded biomes are supported just make the biome name lowercase as a tag!
 
 ## List of added recipes
 
