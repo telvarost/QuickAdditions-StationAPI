@@ -40,7 +40,7 @@ Mod now works on Multiplayer with GlassConfigAPI version 3.0+ used to sync confi
 * Adds ability to set a Y level above which it will always snow.
 * Adds ability to cancel weather reset when sleeping and the weather is clear.
   * This makes rain and snow more common.
-* Adds ability to configure rain/thunder time and duration.
+* Adds ability to configure rain/thunder time until and duration.
 
 ## List of added recipes
 
