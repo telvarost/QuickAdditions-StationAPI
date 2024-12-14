@@ -25,7 +25,7 @@ public class ConfigListener implements PreConfigSavedListener {
             Minecraft minecraft = (Minecraft)FabricLoader.getInstance().getGameInstance();
             if (null != minecraft) {
                 Random rand = new Random();
-                ((SoundHelperAccessor)minecraft.soundManager).setMusicCountdown(rand.nextInt(Config.config.musicCoundownRandomIntervalMax) + Config.config.musicCoundownRandomIntervalMin);
+                ((SoundHelperAccessor)minecraft.soundManager).setMusicCountdown(rand.nextInt(Config.config.MUSIC_CONFIG.musicCoundownRandomIntervalMax) + Config.config.MUSIC_CONFIG.musicCoundownRandomIntervalMin);
 
                 PlayerEntity player = PlayerHelper.getPlayerFromGame();
                 if (null != player) {

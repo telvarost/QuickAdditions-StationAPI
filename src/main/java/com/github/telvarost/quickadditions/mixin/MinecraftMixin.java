@@ -24,7 +24,7 @@ public class MinecraftMixin {
             cancellable = true
     )
     public void loadSoundFromDir(String file, File par2, CallbackInfo ci) {
-        if (Config.config.disableDefaultMinecraftBGM) {
+        if (Config.config.MUSIC_CONFIG.disableDefaultMinecraftBGM) {
             System.out.println("Removing default Minecraft background music.");
             ci.cancel();
         }

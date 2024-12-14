@@ -21,11 +21,11 @@ public class NaturalSpawnerMixin {
     )
     private static int quickAdditions_tick(SpawnGroup instance) {
         if (70 == instance.getCapacity()) {
-            return Config.config.MAX_SPAWN_CAPACITY_MONSTER;
+            return Config.config.ENTITY_SPAWN_MECHANICS_CONFIG.MAX_SPAWN_CAPACITY_MONSTER;
         } else if (15 == instance.getCapacity()) {
-            return Config.config.MAX_SPAWN_CAPACITY_PASSIVE;
+            return Config.config.ENTITY_SPAWN_MECHANICS_CONFIG.MAX_SPAWN_CAPACITY_PASSIVE;
         } else if (5 == instance.getCapacity()) {
-            return Config.config.MAX_SPAWN_CAPACITY_SQUID;
+            return Config.config.ENTITY_SPAWN_MECHANICS_CONFIG.MAX_SPAWN_CAPACITY_SQUID;
         }
         else {
             return instance.getCapacity();
@@ -37,6 +37,6 @@ public class NaturalSpawnerMixin {
             constant = @Constant(intValue = 4)
     )
     private static final int quickAdditions_spawnAttempts(int spawnAttempts) {
-        return Config.config.SPAWN_GROUP_SIZE;
+        return Config.config.ENTITY_SPAWN_MECHANICS_CONFIG.SPAWN_GROUP_SIZE;
     }
 }

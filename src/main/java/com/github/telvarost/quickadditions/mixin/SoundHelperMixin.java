@@ -117,7 +117,7 @@ public abstract class SoundHelperMixin {
             customMusicDir.mkdirs();
         }
 
-        this.timeUntilNextSong = this.random.nextInt(Config.config.musicCoundownRandomIntervalMax);
+        this.timeUntilNextSong = this.random.nextInt(Config.config.MUSIC_CONFIG.musicCoundownRandomIntervalMax);
     }
 
     @Inject(
@@ -183,7 +183,7 @@ public abstract class SoundHelperMixin {
             )
     )
     private int quickAdditions_handleBackgroundMusicRandomIntervalMax(int constant) {
-        return Config.config.musicCoundownRandomIntervalMax;
+        return Config.config.MUSIC_CONFIG.musicCoundownRandomIntervalMax;
     }
 
 
@@ -195,6 +195,6 @@ public abstract class SoundHelperMixin {
             )
     )
     private int quickAdditions_handleBackgroundMusicRandomIntervalMin(int constant) {
-        return Config.config.musicCoundownRandomIntervalMin;
+        return Config.config.MUSIC_CONFIG.musicCoundownRandomIntervalMin;
     }
 }

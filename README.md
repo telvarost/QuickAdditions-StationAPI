@@ -5,10 +5,7 @@ A StationAPI mod for Minecraft Beta 1.7.3 that adds in features that were reques
 # Quick Additions
 Mod now works on Multiplayer with GlassConfigAPI version 3.0+ used to sync configs!
 
-* Adds ability to give the player missing achievements that they may have already achieved.
-  * Load into a world and access mod config from pause menu using [ModMenu](https://modrinth.com/mod/modmenu-beta).
-  * Adding back missing achievements will not work from the main menu or when game is not running.
-* Adds ability to force display active even when tabbing away from the screen.
+### Music
 * Adds ability to change background music countdown timer min and max interval values.
 * Adds ability to add custom background music to the game.
   * On first run of the mod a folder named `custom-music` will be created.
@@ -31,16 +28,27 @@ Mod now works on Multiplayer with GlassConfigAPI version 3.0+ used to sync confi
     * No other file types are supported by default in Minecraft or by this mod.
   * Adds ability to have main menu song override background music.
     * (Vanilla b1.7.3 has Minecraft background music continue to play on main menu if started in-game)
-* Adds ability to speed up night rather than skip it.
-  * (Takes about 30 seconds to sleep the entire night away using this method)
-* Adds ability to exit beds by clicking or swinging the hand.
+
+### Entity Spawning Mechanics
+* Adds ability to disable living entity despawning.
 * Adds ability to change max mob spawn capacity for different creature types.
   * Monster, passive (animals), and squid max spawn capacity can be changed.
 * Adds ability to change mob spawn group size.
+
+### Weather
 * Adds ability to set a Y level above which it will always snow.
 * Adds ability to cancel weather reset when sleeping and the weather is clear.
   * This makes rain and snow more common.
 * Adds ability to configure rain/thunder time until and duration.
+
+### Misc.
+* Adds ability to give the player missing achievements that they may have already achieved.
+  * Load into a world and access mod config from pause menu using [ModMenu](https://modrinth.com/mod/modmenu-beta).
+  * Adding back missing achievements will not work from the main menu or when game is not running.
+* Adds ability to force display active even when tabbing away from the screen.
+* Adds ability to speed up night rather than skip it.
+  * (Takes about 30 seconds to sleep the entire night away using this method)
+* Adds ability to exit beds by clicking or swinging the hand.
 
 ## List of added recipes
 

@@ -28,7 +28,7 @@ public class MainMenuMixin extends Screen {
     )
     public void init(CallbackInfo ci) {
         if (ticks <= 0) {
-            if (Config.config.mainMenuThemeEnabled) {
+            if (Config.config.MUSIC_CONFIG.mainMenuThemeEnabled) {
                 playMainMenuTheme();
             }
         }
@@ -42,13 +42,13 @@ public class MainMenuMixin extends Screen {
         if (initialized && minecraft.options.musicVolume != 0.0F) {
             Sound var1 = streaming.get("mainmenu");
             if (var1 != null) {
-                if (Config.config.mainMenuThemeOverridesBGM) {
+                if (Config.config.MUSIC_CONFIG.mainMenuThemeOverridesBGM) {
                     if (soundSystem.playing("BgMusic")) {
                         soundSystem.stop("BgMusic");
                     }
                 }
 
-                if (  (!soundSystem.playing("BgMusic") || Config.config.mainMenuThemeOverridesBGM)
+                if (  (!soundSystem.playing("BgMusic") || Config.config.MUSIC_CONFIG.mainMenuThemeOverridesBGM)
                    && !soundSystem.playing("streaming")
                    ) {
                     soundSystem.backgroundMusic("streaming", var1.soundFile, var1.id, false);
