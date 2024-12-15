@@ -15,7 +15,6 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.*;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 import paulscode.sound.SoundSystem;
 
 import java.io.File;
@@ -210,9 +209,14 @@ public abstract class SoundHelperMixin {
             SoundSystem instance, String f, float v, Operation<Void> original,
             String id, float volume, float pitch
     ) {
-        if (id.startsWith("portal")) {
-            System.out.println("Lowering portal volume");
-            original.call(instance, f, (v / 10.0f));
+        if (id.startsWith("portal.portal")) {
+            original.call(instance, f, (v * Config.config.MUSIC_CONFIG.volumeNetherPortalAmbient));
+        } else if (id.startsWith("ambient.weather.rain")) {
+            original.call(instance, f, (v * Config.config.MUSIC_CONFIG.volumeRainAmbient));
+        } else if (id.startsWith("mob.ghast.moan")) {
+            original.call(instance, f, (v * Config.config.MUSIC_CONFIG.volumeGhastAmbient));
+        } else if (id.startsWith("ambient.cave.cave")) {
+            original.call(instance, f, (v * Config.config.MUSIC_CONFIG.volumeCaveAmbient));
         } else {
             original.call(instance, f, v);
         }
@@ -229,9 +233,14 @@ public abstract class SoundHelperMixin {
             SoundSystem instance, String f, float v, Operation<Void> original,
             String id, float x, float y, float z, float volume, float pitch
     ) {
-        if (id.startsWith("portal")) {
-            System.out.println("Lowering portal volume2");
-            original.call(instance, f, (v / 10.0f));
+        if (id.startsWith("portal.portal")) {
+            original.call(instance, f, (v * Config.config.MUSIC_CONFIG.volumeNetherPortalAmbient));
+        } else if (id.startsWith("ambient.weather.rain")) {
+            original.call(instance, f, (v * Config.config.MUSIC_CONFIG.volumeRainAmbient));
+        } else if (id.startsWith("mob.ghast.moan")) {
+            original.call(instance, f, (v * Config.config.MUSIC_CONFIG.volumeGhastAmbient));
+        } else if (id.startsWith("ambient.cave.cave")) {
+            original.call(instance, f, (v * Config.config.MUSIC_CONFIG.volumeCaveAmbient));
         } else {
             original.call(instance, f, v);
         }

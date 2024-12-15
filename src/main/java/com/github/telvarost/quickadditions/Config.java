@@ -180,6 +180,34 @@ public class Config {
                 maxLength = Integer.MAX_VALUE
         )
         public Integer musicCoundownRandomIntervalMax = 12000;
+
+        @ConfigEntry(
+                name = "Volume: Nether Portal Ambient",
+                description = "Float value between 0.0 (0%) and 1.0 (100%)",
+                maxLength = 1
+        )
+        public Float volumeNetherPortalAmbient = 1.0F;
+
+        @ConfigEntry(
+                name = "Volume: Rain Ambient",
+                description = "Float value between 0.0 (0%) and 1.0 (100%)",
+                maxLength = 1
+        )
+        public Float volumeRainAmbient = 1.0F;
+
+        @ConfigEntry(
+                name = "Volume: Ghast Ambient",
+                description = "Float value between 0.0 (0%) and 1.0 (100%)",
+                maxLength = 1
+        )
+        public Float volumeGhastAmbient = 1.0F;
+
+        @ConfigEntry(
+                name = "Volume: Cave Ambient",
+                description = "Float value between 0.0 (0%) and 1.0 (100%)",
+                maxLength = 1
+        )
+        public Float volumeCaveAmbient = 1.0F;
     }
 
     public static class WeatherConfig {
