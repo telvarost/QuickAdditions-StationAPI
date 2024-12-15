@@ -119,7 +119,7 @@ public class Config {
                 description = "Living entities will no longer despawn",
                 multiplayerSynced = true
         )
-        public Boolean disableLivingEntitiesDespawning = true;
+        public Boolean disableLivingEntitiesDespawning = false;
 
         @ConfigEntry(
                 name = "Spawn Group Size",
