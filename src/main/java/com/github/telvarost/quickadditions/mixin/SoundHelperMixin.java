@@ -209,21 +209,21 @@ public abstract class SoundHelperMixin {
             SoundSystem instance, String f, float v, Operation<Void> original,
             String id, float volume, float pitch
     ) {
+        float adjustedVolume = v;
+
         if (id.startsWith("portal.portal")) {
-            original.call(instance, f, (v * Config.config.MUSIC_CONFIG.volumeNetherPortalAmbient));
+            adjustedVolume = v * Config.config.MUSIC_CONFIG.volumeNetherPortalAmbient;
         } else if (id.startsWith("ambient")) {
             if (id.startsWith("ambient.weather.rain")) {
-                original.call(instance, f, (v * Config.config.MUSIC_CONFIG.volumeRainAmbient));
+                adjustedVolume = v * Config.config.MUSIC_CONFIG.volumeRainAmbient;
             } else if (id.startsWith("ambient.cave.cave")) {
-                original.call(instance, f, (v * Config.config.MUSIC_CONFIG.volumeCaveAmbient));
-            } else {
-                original.call(instance, f, v);
+                adjustedVolume = v * Config.config.MUSIC_CONFIG.volumeCaveAmbient;
             }
         } else if (id.startsWith("mob.ghast.moan")) {
-            original.call(instance, f, (v * Config.config.MUSIC_CONFIG.volumeGhastAmbient));
-        } else {
-            original.call(instance, f, v);
+            adjustedVolume = v * Config.config.MUSIC_CONFIG.volumeGhastAmbient;
         }
+
+        original.call(instance, f, adjustedVolume);
     }
 
     @WrapOperation(
@@ -237,20 +237,20 @@ public abstract class SoundHelperMixin {
             SoundSystem instance, String f, float v, Operation<Void> original,
             String id, float x, float y, float z, float volume, float pitch
     ) {
+        float adjustedVolume = v;
+
         if (id.startsWith("portal.portal")) {
-            original.call(instance, f, (v * Config.config.MUSIC_CONFIG.volumeNetherPortalAmbient));
+            adjustedVolume = v * Config.config.MUSIC_CONFIG.volumeNetherPortalAmbient;
         } else if (id.startsWith("ambient")) {
             if (id.startsWith("ambient.weather.rain")) {
-                original.call(instance, f, (v * Config.config.MUSIC_CONFIG.volumeRainAmbient));
+                adjustedVolume = v * Config.config.MUSIC_CONFIG.volumeRainAmbient;
             } else if (id.startsWith("ambient.cave.cave")) {
-                original.call(instance, f, (v * Config.config.MUSIC_CONFIG.volumeCaveAmbient));
-            } else {
-                original.call(instance, f, v);
+                adjustedVolume = v * Config.config.MUSIC_CONFIG.volumeCaveAmbient;
             }
         } else if (id.startsWith("mob.ghast.moan")) {
-            original.call(instance, f, (v * Config.config.MUSIC_CONFIG.volumeGhastAmbient));
-        } else {
-            original.call(instance, f, v);
+            adjustedVolume = v * Config.config.MUSIC_CONFIG.volumeGhastAmbient;
         }
+
+        original.call(instance, f, adjustedVolume);
     }
 }
