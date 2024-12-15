@@ -216,6 +216,8 @@ public abstract class SoundHelperMixin {
                 original.call(instance, f, (v * Config.config.MUSIC_CONFIG.volumeRainAmbient));
             } else if (id.startsWith("ambient.cave.cave")) {
                 original.call(instance, f, (v * Config.config.MUSIC_CONFIG.volumeCaveAmbient));
+            } else {
+                original.call(instance, f, v);
             }
         } else if (id.startsWith("mob.ghast.moan")) {
             original.call(instance, f, (v * Config.config.MUSIC_CONFIG.volumeGhastAmbient));
@@ -242,6 +244,8 @@ public abstract class SoundHelperMixin {
                 original.call(instance, f, (v * Config.config.MUSIC_CONFIG.volumeRainAmbient));
             } else if (id.startsWith("ambient.cave.cave")) {
                 original.call(instance, f, (v * Config.config.MUSIC_CONFIG.volumeCaveAmbient));
+            } else {
+                original.call(instance, f, v);
             }
         } else if (id.startsWith("mob.ghast.moan")) {
             original.call(instance, f, (v * Config.config.MUSIC_CONFIG.volumeGhastAmbient));
