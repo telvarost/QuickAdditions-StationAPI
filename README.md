@@ -18,6 +18,7 @@ Mod now works on Multiplayer with GlassConfigAPI version 3.0+ used to sync confi
 * Adds ability to configure rain/thunder time until and duration.
 
 ### Music
+* Adds ability to lower ambient nether portal, rain, ghast, and cave sounds.
 * Adds ability to change background music countdown timer min and max interval values.
 * Adds ability to add custom background music to the game.
   * On first run of the mod a folder named `custom-music` will be created.
