@@ -1,6 +1,7 @@
 package com.github.telvarost.quickadditions.mixin;
 
 import com.github.telvarost.quickadditions.Config;
+import com.github.telvarost.quickadditions.ModHelper;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import net.fabricmc.api.EnvType;
@@ -33,6 +34,8 @@ public abstract class SoundHelperMixin {
     @Shadow public abstract void loadMusic(String string, File file);
 
     @Shadow public abstract void loadStreaming(String string, File file);
+
+    @Shadow private static SoundSystem soundSystem;
 
     @Inject(
             method = "<init>",
@@ -122,13 +125,25 @@ public abstract class SoundHelperMixin {
 
     @Inject(
             method = "tick",
+            at = @At("HEAD"),
+            cancellable = true
+    )
+    public void quickAdditions_tickCancelSong(CallbackInfo ci) {
+        if (ModHelper.ModHelperFields.cancelCurrentBGM) {
+            ModHelper.ModHelperFields.cancelCurrentBGM = false;
+            soundSystem.stop("BgMusic");
+        }
+    }
+
+    @Inject(
+            method = "tick",
             at = @At(
                     value = "INVOKE",
                     target = "Lnet/minecraft/client/sound/SoundEntry;getSounds()Lnet/minecraft/client/sound/Sound;"
             ),
             cancellable = true
     )
-    public void tick(CallbackInfo ci) {
+    public void quickAdditions_tickRegionSpecific(CallbackInfo ci) {
         PlayerEntity player = PlayerHelper.getPlayerFromGame();
         Sound currentMusic = this.music.getSounds();
 
@@ -144,15 +159,18 @@ public abstract class SoundHelperMixin {
                 String biomeTag = "-unknown-";
 
                 if (songName.contains(levelTag)) {
+                    ModHelper.ModHelperFields.songLevelId = player.dimensionId;
                     return;
                 }
 
                 if (0 == player.dimensionId) {
                     if (songName.contains("-overworld-")) {
+                        ModHelper.ModHelperFields.songLevelId = player.dimensionId;
                         return;
                     }
                 } else if (-1 == player.dimensionId) {
                     if (songName.contains("-nether-")) {
+                        ModHelper.ModHelperFields.songLevelId = player.dimensionId;
                         return;
                     }
                 }
@@ -167,11 +185,17 @@ public abstract class SoundHelperMixin {
                 }
 
                 if (songName.contains(biomeTag)) {
+                    ModHelper.ModHelperFields.songLevelId = Integer.MAX_VALUE;
                     return;
                 }
 
+                ModHelper.ModHelperFields.songLevelId = Integer.MAX_VALUE;
                 ci.cancel();
+            } else {
+                ModHelper.ModHelperFields.songLevelId = Integer.MAX_VALUE;
             }
+        } else {
+            ModHelper.ModHelperFields.songLevelId = Integer.MAX_VALUE;
         }
     }
 
