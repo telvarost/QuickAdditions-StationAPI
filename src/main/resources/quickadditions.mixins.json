@@ -6,12 +6,13 @@
   "mixins": [
     "LivingEntityMixin",
     "NaturalSpawnerMixin",
-    "PlayerBaseMixin",
+    "PlayerEntityMixin",
     "WorldMixin"
   ],
   "server": [
   ],
   "client": [
+    "ClientPlayerEntityMixin",
     "GameRendererMixin",
     "MainMenuMixin",
     "MinecraftMixin",
