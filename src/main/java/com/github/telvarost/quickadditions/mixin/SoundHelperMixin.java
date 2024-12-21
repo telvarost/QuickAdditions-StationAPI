@@ -159,17 +159,23 @@ public abstract class SoundHelperMixin {
                 String biomeTag = "-unknown-";
 
                 if (songName.contains(levelTag)) {
+                    System.out.println("Level tag found! " + levelTag + " Song: " + currentMusic.id);
                     ModHelper.ModHelperFields.songLevelId = player.dimensionId;
                     return;
                 }
 
                 if (0 == player.dimensionId) {
+                    levelTag = "-overworld-";
                     if (songName.contains("-overworld-")) {
+                        System.out.println("Level tag found! " + levelTag + " Song: " + currentMusic.id);
+                        System.out.println("Dimension tag found! " + "-overworld-" + " Song: " + currentMusic.id);
                         ModHelper.ModHelperFields.songLevelId = player.dimensionId;
                         return;
                     }
                 } else if (-1 == player.dimensionId) {
+                    levelTag = "-nether-";
                     if (songName.contains("-nether-")) {
+                        System.out.println("Dimension tag found! " + "-nether-" + " Song: " + currentMusic.id);
                         ModHelper.ModHelperFields.songLevelId = player.dimensionId;
                         return;
                     }
@@ -185,16 +191,24 @@ public abstract class SoundHelperMixin {
                 }
 
                 if (songName.contains(biomeTag)) {
+                    System.out.println("Biome tag found! " + biomeTag + " Song: " + currentMusic.id);
                     ModHelper.ModHelperFields.songLevelId = Integer.MAX_VALUE;
                     return;
                 }
 
+                System.out.println("Song name does not match tags " + levelTag + " and " + biomeTag + " for: " + currentMusic.id);
                 ModHelper.ModHelperFields.songLevelId = Integer.MAX_VALUE;
                 ci.cancel();
             } else {
+                System.out.println("Song does not end in '-specific.': " + currentMusic.id);
                 ModHelper.ModHelperFields.songLevelId = Integer.MAX_VALUE;
             }
         } else {
+            if (null != currentMusic && null != currentMusic.id) {
+                System.out.println("Song name is too short to have tags: " + currentMusic.id);
+            } else {
+                System.out.println("No songs to play!");
+            }
             ModHelper.ModHelperFields.songLevelId = Integer.MAX_VALUE;
         }
     }
