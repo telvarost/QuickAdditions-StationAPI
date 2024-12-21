@@ -153,6 +153,12 @@ public class Config {
 
     public static class MusicConfig {
         @ConfigEntry(
+                name = "Dimension Change Stops Level Specific Songs",
+                description = "Using portals stops dimension specific songs"
+        )
+        public Boolean stopDimensionSpecificSongOnPortalUse = true;
+
+        @ConfigEntry(
                 name = "Main Menu Theme Enabled",
                 description = "Plays 'mainmenu' song file if one is found"
         )

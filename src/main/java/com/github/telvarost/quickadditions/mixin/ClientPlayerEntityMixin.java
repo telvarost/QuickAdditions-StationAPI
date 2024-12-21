@@ -1,5 +1,6 @@
 package com.github.telvarost.quickadditions.mixin;
 
+import com.github.telvarost.quickadditions.Config;
 import com.github.telvarost.quickadditions.ModHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.util.Session;
@@ -30,8 +31,10 @@ public class ClientPlayerEntityMixin extends PlayerEntity {
             cancellable = true
     )
     public void tickMovement(CallbackInfo ci) {
-        if (ModHelper.ModHelperFields.songLevelId == this.dimensionId) {
-            ModHelper.ModHelperFields.cancelCurrentBGM = true;
+        if (Config.config.MUSIC_CONFIG.stopDimensionSpecificSongOnPortalUse) {
+            if (ModHelper.ModHelperFields.songLevelId == this.dimensionId) {
+                ModHelper.ModHelperFields.cancelCurrentBGM = true;
+            }
         }
     }
 }
