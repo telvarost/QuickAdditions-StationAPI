@@ -1,6 +1,8 @@
 package com.github.telvarost.quickadditions.mixin;
 
 import com.github.telvarost.quickadditions.Config;
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.Minecraft;
@@ -14,7 +16,6 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
@@ -24,16 +25,16 @@ public class GameRendererMixin {
 
     @Shadow private Minecraft client;
 
-    @Redirect(
+    @WrapOperation(
             method = "onFrameUpdate",
             at = @At(
                     value = "INVOKE",
                     target = "Lnet/minecraft/client/Minecraft;pauseGame()V"
             )
     )
-    public void quickAdditions_method_1844(Minecraft instance) {
+    public void quickAdditions_method_1844(Minecraft instance, Operation<Void> original) {
         if (!Config.config.forceDisplayActive) {
-            instance.pauseGame();
+            original.call(instance);
         }
     }
 
@@ -55,15 +56,15 @@ public class GameRendererMixin {
         currentY = var20;
     }
 
-    @Redirect(
+    @WrapOperation(
             method = "renderSnow",
             at = @At(
                     value = "INVOKE",
                     target = "Lnet/minecraft/world/biome/Biome;canSnow()Z"
             )
     )
-    private boolean quickAdditions_renderSnow(Biome instance) {
-        boolean allowSnow = instance.canSnow();
+    private boolean quickAdditions_renderSnow(Biome instance, Operation<Boolean> original) {
+        boolean allowSnow = original.call(instance);
 
         if (Config.config.WEATHER_CONFIG.enableAlwaysSnowAboveSetYLevel) {
             if (Config.config.WEATHER_CONFIG.alwaysSnowAboveThisYLevel < this.client.world.getTopSolidBlockY(currentX, currentY)) {
@@ -89,15 +90,15 @@ public class GameRendererMixin {
         currentY = var20;
     }
 
-    @Redirect(
+    @WrapOperation(
             method = "renderSnow",
             at = @At(
                     value = "INVOKE",
                     target = "Lnet/minecraft/world/biome/Biome;canRain()Z"
             )
     )
-    private boolean quickAdditions_renderRain(Biome instance) {
-        boolean allowRain = instance.canRain();
+    private boolean quickAdditions_renderRain(Biome instance, Operation<Boolean> original) {
+        boolean allowRain = original.call(instance);
 
         if (Config.config.WEATHER_CONFIG.enableAlwaysSnowAboveSetYLevel) {
             if (Config.config.WEATHER_CONFIG.alwaysSnowAboveThisYLevel < this.client.world.getTopSolidBlockY(currentX, currentY)) {
@@ -110,27 +111,27 @@ public class GameRendererMixin {
 
     @Unique private int highestBlockYLocation = 0;
 
-    @Redirect(
+    @WrapOperation(
             method = "renderRain",
             at = @At(
                     value = "INVOKE",
                     target = "Lnet/minecraft/world/World;getTopSolidBlockY(II)I"
             )
     )
-    private int quickAdditions_tick(World instance, int x, int z) {
-        highestBlockYLocation = instance.getTopSolidBlockY(x, z);
+    private int quickAdditions_tick(World instance, int x, int z, Operation<Integer> original) {
+        highestBlockYLocation = original.call(instance, x, z);
         return highestBlockYLocation;
     }
 
-    @Redirect(
+    @WrapOperation(
             method = "renderRain",
             at = @At(
                     value = "INVOKE",
                     target = "Lnet/minecraft/world/biome/Biome;canRain()Z"
             )
     )
-    private boolean quickAdditions_tick(Biome instance) {
-        boolean allowRain = instance.canRain();
+    private boolean quickAdditions_tick(Biome instance, Operation<Boolean> original) {
+        boolean allowRain = original.call(instance);
 
         if (Config.config.WEATHER_CONFIG.enableAlwaysSnowAboveSetYLevel) {
             if (Config.config.WEATHER_CONFIG.alwaysSnowAboveThisYLevel < highestBlockYLocation) {

@@ -1,6 +1,10 @@
 package com.github.telvarost.quickadditions.mixin;
 
 import com.github.telvarost.quickadditions.Config;
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
+import net.minecraft.entity.passive.PigEntity;
+import net.minecraft.entity.vehicle.BoatEntity;
 import net.minecraft.world.NaturalSpawner;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldProperties;
@@ -11,7 +15,6 @@ import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Constant;
 import org.spongepowered.asm.mixin.injection.ModifyConstant;
-import org.spongepowered.asm.mixin.injection.Redirect;
 
 import java.util.List;
 
@@ -35,17 +38,18 @@ public abstract class WorldMixin {
     @Shadow protected abstract void clearWeather();
 
     @Unique private int highestBlockYLocation = 0;
+    @Unique private BoatEntity skipObject;
 
-    @Redirect(
+    @WrapOperation(
             method = "tick",
             at = @At(
                     value = "INVOKE",
                     target = "Lnet/minecraft/world/World;canSkipNight()Z"
             )
     )
-    public boolean quickAdditions_tickCanSkipNight(World instance) {
+    public boolean quickAdditions_tickCanSkipNight(World instance, Operation<Boolean> original) {
         if (Config.config.bedsSpeedUpNightRatherThanSkipIt) {
-            if (instance.canSkipNight()) {
+            if (original.call(instance)) {
                 boolean var1 = false;
                 if (this.allowMonsterSpawning && this.difficulty >= 1) {
                     var1 = NaturalSpawner.spawnMonstersAndWakePlayers(instance, this.players);
@@ -65,18 +69,18 @@ public abstract class WorldMixin {
 
             return false;
         } else {
-            return instance.canSkipNight();
+            return original.call(instance);
         }
     }
 
-    @Redirect(
+    @WrapOperation(
             method = "afterSkipNight",
             at = @At(
                     value = "INVOKE",
                     target = "Lnet/minecraft/world/World;clearWeather()V"
             )
     )
-    protected void quickAdditions_afterSkipNight(World instance) {
+    protected void quickAdditions_afterSkipNight(World instance, Operation<Void> original) {
         if (Config.config.WEATHER_CONFIG.sleepOnlyResetsWeatherWhenRaining) {
             if (isRaining() || isThundering()) {
                 this.clearWeather();
@@ -176,27 +180,27 @@ public abstract class WorldMixin {
         return Config.config.WEATHER_CONFIG.timeUntilRainMinimum;
     }
 
-    @Redirect(
+    @WrapOperation(
             method = "manageChunkUpdatesAndEvents",
             at = @At(
                     value = "INVOKE",
                     target = "Lnet/minecraft/world/World;getTopSolidBlockY(II)I"
             )
     )
-    private int quickAdditions_tickGetTopSolidBlock(World instance, int x, int z) {
-        highestBlockYLocation = instance.getTopSolidBlockY(x, z);
+    private int quickAdditions_tickGetTopSolidBlock(World instance, int x, int z, Operation<Integer> original) {
+        highestBlockYLocation = original.call(instance, x, z);
         return highestBlockYLocation;
     }
 
-    @Redirect(
+    @WrapOperation(
             method = "manageChunkUpdatesAndEvents",
             at = @At(
                     value = "INVOKE",
                     target = "Lnet/minecraft/world/biome/Biome;canSnow()Z"
             )
     )
-    private boolean quickAdditions_tickCanSnow(Biome instance) {
-        boolean allowSnow = instance.canSnow();
+    private boolean quickAdditions_tickCanSnow(Biome instance, Operation<Boolean> original) {
+        boolean allowSnow = original.call(instance);
 
         if (Config.config.WEATHER_CONFIG.enableAlwaysSnowAboveSetYLevel) {
             if (Config.config.WEATHER_CONFIG.alwaysSnowAboveThisYLevel < highestBlockYLocation) {
@@ -205,6 +209,31 @@ public abstract class WorldMixin {
         }
 
         return allowSnow;
+    }
+
+    @WrapOperation(
+            method = "countEntities",
+            at = @At(
+                    value = "INVOKE",
+                    target = "Ljava/util/List;get(I)Ljava/lang/Object;"
+            )
+    )
+    public Object quickAdditions_countEntities(List instance, int index, Operation<Object> original) {
+        Object entityObject = original.call(instance, index);
+
+        if (Config.config.ENTITY_SPAWN_MECHANICS_CONFIG.doNotCountSaddledPigs) {
+            if (entityObject instanceof PigEntity) {
+                PigEntity pigEntity = (PigEntity) entityObject;
+                if (pigEntity.isSaddled()) {
+                    if (null == skipObject) {
+                        skipObject = new BoatEntity(pigEntity.world);
+                    }
+                    return skipObject;
+                }
+            }
+        }
+
+        return entityObject;
     }
 
 }

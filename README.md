@@ -7,6 +7,9 @@ Mod now works on Multiplayer with GlassConfigAPI version 3.0+ used to sync confi
 
 ### Entity Spawning Mechanics
 * Adds ability to disable living entity despawning.
+* Adds ability to disable saddled pig despawning.
+  * Also adds the ability to skip saddled pigs in the passive spawn count
+    * Allowing passive spawn capacity to be filled with normal despawning passive mobs and not just the new saddled pigs
 * Adds ability to change max mob spawn capacity for different creature types.
   * Monster, passive (animals), and squid max spawn capacity can be changed.
 * Adds ability to change mob spawn group size.

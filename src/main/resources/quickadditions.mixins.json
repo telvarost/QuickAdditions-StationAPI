@@ -6,6 +6,7 @@
   "mixins": [
     "LivingEntityMixin",
     "NaturalSpawnerMixin",
+    "PigEntityMixin",
     "PlayerEntityMixin",
     "WorldMixin"
   ],

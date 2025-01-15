@@ -122,6 +122,20 @@ public class Config {
         public Boolean disableLivingEntitiesDespawning = false;
 
         @ConfigEntry(
+                name = "Disable Saddled Pigs Despawning",
+                description = "Saddled pigs will no longer despawn",
+                multiplayerSynced = true
+        )
+        public Boolean disableSaddledPigsDespawning = false;
+
+        @ConfigEntry(
+                name = "Do Not Count Saddled Pigs",
+                description = "Saddled pigs are not in passive count",
+                multiplayerSynced = true
+        )
+        public Boolean doNotCountSaddledPigs = false;
+
+        @ConfigEntry(
                 name = "Spawn Group Size",
                 description = "Does not effect ghasts, wolves cap at 8",
                 multiplayerSynced = true,
