@@ -14,6 +14,7 @@ import net.minecraft.world.biome.Biome;
 import net.modificationstation.stationapi.api.entity.player.PlayerHelper;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.*;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import paulscode.sound.SoundSystem;
@@ -36,6 +37,10 @@ public abstract class SoundHelperMixin {
     @Shadow public abstract void loadStreaming(String string, File file);
 
     @Shadow private static SoundSystem soundSystem;
+
+    @Unique private int dimensionId = 0;
+
+    @Unique private String biomeTag = "-unknown-";
 
     @Inject(
             method = "<init>",
@@ -135,68 +140,110 @@ public abstract class SoundHelperMixin {
         }
     }
 
-    @Inject(
+    @WrapOperation(
             method = "tick",
             at = @At(
                     value = "INVOKE",
                     target = "Lnet/minecraft/client/sound/SoundEntry;getSounds()Lnet/minecraft/client/sound/Sound;"
-            ),
-            cancellable = true
+            )
     )
-    public void quickAdditions_tickRegionSpecific(CallbackInfo ci) {
-        PlayerEntity player = PlayerHelper.getPlayerFromGame();
-        Sound currentMusic = this.music.getSounds();
+    public Sound quickAdditions_tickRegionSpecific(SoundEntry instance, Operation<Sound> original) {
+        Sound currentMusic = original.call(instance);
 
-        if (  (null != player)
-           && (null != currentMusic)
+        if (  (null != currentMusic)
            && (null != currentMusic.id)
-           && (12 < currentMusic.id.length())
+           && (currentMusic.id.contains("-specific."))
         ) {
-            String songName = currentMusic.id.substring(0, currentMusic.id.length() - 3);
+            PlayerEntity player = PlayerHelper.getPlayerFromGame();
+            if (null != player) {
+                dimensionId = player.dimensionId;
+            }
 
-            if (songName.endsWith("-specific.")) {
-                String levelTag = "-level" + player.dimensionId + '-';
-                String biomeTag = "-unknown-";
+            if (currentMusic.id.contains("-level" + dimensionId + "-")) {
+                ModHelper.ModHelperFields.songLevelId = dimensionId;
+                return currentMusic;
+            }
 
-                if (songName.contains(levelTag)) {
-                    ModHelper.ModHelperFields.songLevelId = player.dimensionId;
-                    return;
+            if (0 == dimensionId) {
+                if (currentMusic.id.contains("-overworld-")) {
+                    ModHelper.ModHelperFields.songLevelId = dimensionId;
+                    return currentMusic;
                 }
-
-                if (0 == player.dimensionId) {
-                    if (songName.contains("-overworld-")) {
-                        ModHelper.ModHelperFields.songLevelId = player.dimensionId;
-                        return;
-                    }
-                } else if (-1 == player.dimensionId) {
-                    if (songName.contains("-nether-")) {
-                        ModHelper.ModHelperFields.songLevelId = player.dimensionId;
-                        return;
-                    }
+            } else if (-1 == dimensionId) {
+                if (currentMusic.id.contains("-nether-")) {
+                    ModHelper.ModHelperFields.songLevelId = dimensionId;
+                    return currentMusic;
                 }
+            }
 
+            if (null != player) {
                 if (null != player.world) {
                     if (null != player.world.method_1781()) {
-                        Biome biome = player.world.method_1781().getBiome((int)Math.floor(player.x), (int)Math.floor(player.z));
+                        Biome biome = player.world.method_1781().getBiome((int) Math.floor(player.x), (int) Math.floor(player.z));
                         if (null != biome && null != biome.name) {
                             biomeTag = '-' + biome.name.toLowerCase() + '-';
                         }
                     }
                 }
-
-                if (songName.contains(biomeTag)) {
-                    ModHelper.ModHelperFields.songLevelId = Integer.MAX_VALUE;
-                    return;
-                }
-
-                ModHelper.ModHelperFields.songLevelId = Integer.MAX_VALUE;
-                ci.cancel();
-            } else {
-                ModHelper.ModHelperFields.songLevelId = Integer.MAX_VALUE;
             }
-        } else {
+
+            if (currentMusic.id.contains(biomeTag)) {
+                ModHelper.ModHelperFields.songLevelId = Integer.MAX_VALUE;
+                return currentMusic;
+            }
+
+            System.out.println("Skipping: " + currentMusic.id);
             ModHelper.ModHelperFields.songLevelId = Integer.MAX_VALUE;
+            return null;
+        } else if (  (null != currentMusic)
+                  && (null != currentMusic.soundFile)
+                  && (currentMusic.soundFile.toString().contains("-specific."))
+        ) {
+            PlayerEntity player = PlayerHelper.getPlayerFromGame();
+            if (null != player) {
+                dimensionId = player.dimensionId;
+            }
+
+            if (currentMusic.soundFile.toString().contains("-level" + dimensionId + "-")) {
+                ModHelper.ModHelperFields.songLevelId = dimensionId;
+                return currentMusic;
+            }
+
+            if (0 == dimensionId) {
+                if (currentMusic.soundFile.toString().contains("-overworld-")) {
+                    ModHelper.ModHelperFields.songLevelId = dimensionId;
+                    return currentMusic;
+                }
+            } else if (-1 == dimensionId) {
+                if (currentMusic.soundFile.toString().contains("-nether-")) {
+                    ModHelper.ModHelperFields.songLevelId = dimensionId;
+                    return currentMusic;
+                }
+            }
+
+            if (null != player) {
+                if (null != player.world) {
+                    if (null != player.world.method_1781()) {
+                        Biome biome = player.world.method_1781().getBiome((int) Math.floor(player.x), (int) Math.floor(player.z));
+                        if (null != biome && null != biome.name) {
+                            biomeTag = '-' + biome.name.toLowerCase() + '-';
+                        }
+                    }
+                }
+            }
+
+            if (currentMusic.soundFile.toString().contains(biomeTag)) {
+                ModHelper.ModHelperFields.songLevelId = Integer.MAX_VALUE;
+                return currentMusic;
+            }
+
+            System.out.println("Skipping: " + currentMusic.soundFile);
+            ModHelper.ModHelperFields.songLevelId = Integer.MAX_VALUE;
+            return null;
         }
+
+        ModHelper.ModHelperFields.songLevelId = Integer.MAX_VALUE;
+        return currentMusic;
     }
 
     @ModifyConstant(

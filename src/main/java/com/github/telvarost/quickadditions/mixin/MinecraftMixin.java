@@ -1,10 +1,13 @@
 package com.github.telvarost.quickadditions.mixin;
 
 import com.github.telvarost.quickadditions.Config;
+import com.github.telvarost.quickadditions.ModHelper;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.Minecraft;
+import net.minecraft.entity.player.ClientPlayerEntity;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -14,6 +17,8 @@ import java.io.File;
 @Environment(EnvType.CLIENT)
 @Mixin(Minecraft.class)
 public class MinecraftMixin {
+
+    @Shadow public ClientPlayerEntity player;
 
     @Inject(
             method = "loadResource",
@@ -27,6 +32,19 @@ public class MinecraftMixin {
         if (Config.config.MUSIC_CONFIG.disableDefaultMinecraftBGM) {
             System.out.println("Removing default Minecraft background music.");
             ci.cancel();
+        }
+    }
+
+    @Inject(
+            method = "changeDimension",
+            at = @At("RETURN"),
+            cancellable = true
+    )
+    public void quickAdditions_changeDimension(CallbackInfo ci) {
+        if (Config.config.MUSIC_CONFIG.stopDimensionSpecificSongOnPortalUse) {
+            if (ModHelper.ModHelperFields.songLevelId == this.player.dimensionId) {
+                ModHelper.ModHelperFields.cancelCurrentBGM = true;
+            }
         }
     }
 }
