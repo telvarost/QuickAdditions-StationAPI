@@ -167,6 +167,12 @@ public class Config {
 
     public static class MusicConfig {
         @ConfigEntry(
+                name = "Dimension Change Stops Background Music",
+                description = "Using portals stops any active BGM"
+        )
+        public Boolean stopCurrentBgmOnPortalUse = true;
+
+        @ConfigEntry(
                 name = "Dimension Change Stops Level Specific Songs",
                 description = "Using portals stops dimension specific songs"
         )

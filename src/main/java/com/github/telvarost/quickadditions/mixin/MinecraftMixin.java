@@ -41,7 +41,9 @@ public class MinecraftMixin {
             cancellable = true
     )
     public void quickAdditions_changeDimension(CallbackInfo ci) {
-        if (Config.config.MUSIC_CONFIG.stopDimensionSpecificSongOnPortalUse) {
+        if (Config.config.MUSIC_CONFIG.stopCurrentBgmOnPortalUse) {
+            ModHelper.ModHelperFields.cancelCurrentBGM = true;
+        } else if (Config.config.MUSIC_CONFIG.stopDimensionSpecificSongOnPortalUse) {
             if (ModHelper.ModHelperFields.songLevelId == this.player.dimensionId) {
                 ModHelper.ModHelperFields.cancelCurrentBGM = true;
             }
