@@ -37,7 +37,7 @@ public class MinecraftMixin {
 
     @Inject(
             method = "changeDimension",
-            at = @At("RETURN"),
+            at = @At("HEAD"),
             cancellable = true
     )
     public void quickAdditions_changeDimension(CallbackInfo ci) {
