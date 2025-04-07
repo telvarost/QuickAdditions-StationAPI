@@ -55,6 +55,7 @@ Mod now works on Multiplayer with GlassConfigAPI version 3.0+ used to sync confi
 * Adds ability to speed up night rather than skip it.
   * (Takes about 30 seconds to sleep the entire night away using this method)
 * Adds ability to exit beds by clicking or swinging the hand.
+* Adds ability to configure percentage of sleeping players needed to skip nighttime.
 
 ## List of added recipes
 

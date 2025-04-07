@@ -4,6 +4,7 @@ import com.github.telvarost.quickadditions.Config;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import net.minecraft.entity.passive.PigEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.vehicle.BoatEntity;
 import net.minecraft.world.NaturalSpawner;
 import net.minecraft.world.World;
@@ -14,7 +15,10 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Constant;
+import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyConstant;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.List;
 
@@ -25,7 +29,11 @@ public abstract class WorldMixin {
 
     @Shadow public int difficulty;
 
+    @Shadow private boolean allPlayersSleeping;
+
     @Shadow public List players;
+
+    @Shadow public boolean isRemote;
 
     @Shadow protected WorldProperties properties;
 
@@ -70,6 +78,64 @@ public abstract class WorldMixin {
             return false;
         } else {
             return original.call(instance);
+        }
+    }
+
+    @Inject(
+            method = "updateSleepingPlayers",
+            at = @At("HEAD"),
+            cancellable = true
+    )
+    protected void quickAdditions_updateSleepingPlayers(CallbackInfo ci) {
+        if (1.0f > Config.config.asleepPlayerPercentageForSkippingNight) {
+            int playersSleepingCount = 0;
+
+            for (Object var2 : this.players) {
+                if (((PlayerEntity)var2).isSleeping()) {
+                    playersSleepingCount++;
+                }
+            }
+
+            if (  ( null != this.players )
+               && ( !this.players.isEmpty() )
+               && ( ((float) playersSleepingCount / this.players.size()) >= Config.config.asleepPlayerPercentageForSkippingNight)
+            ) {
+                this.allPlayersSleeping = true;
+            } else {
+                this.allPlayersSleeping = false;
+            }
+
+            ci.cancel();
+        }
+    }
+
+    @Inject(
+            method = "canSkipNight",
+            at = @At("HEAD"),
+            cancellable = true
+    )
+    protected void quickAdditions_canSkipNight(CallbackInfoReturnable<Boolean> cir) {
+        if (1.0f > Config.config.asleepPlayerPercentageForSkippingNight) {
+            if (this.allPlayersSleeping && !this.isRemote) {
+                int playersFullySleepingCount = 0;
+
+                for (Object var2 : this.players) {
+                    if (((PlayerEntity)var2).isFullyAsleep()) {
+                        playersFullySleepingCount++;
+                    }
+                }
+
+                if (  ( null != this.players )
+                   && ( !this.players.isEmpty() )
+                   && ( ((float) playersFullySleepingCount / this.players.size()) >= Config.config.asleepPlayerPercentageForSkippingNight)
+                ) {
+                    cir.setReturnValue(true);
+                } else {
+                    cir.setReturnValue(false);
+                }
+            } else {
+                cir.setReturnValue(false);
+            }
         }
     }
 

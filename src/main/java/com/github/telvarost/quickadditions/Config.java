@@ -30,6 +30,13 @@ public class Config {
         public WeatherConfig WEATHER_CONFIG = new WeatherConfig();
 
         @ConfigEntry(
+                name = "Asleep Player Percentage For Skipping Night",
+                description = "Float value between 0.0 (0%) and 1.0 (100%)",
+                multiplayerSynced = true
+        )
+        public Float asleepPlayerPercentageForSkippingNight = 1.0f;
+
+        @ConfigEntry(
                 name = "Beds Speed Up Night Rather Than Skip It",
                 multiplayerSynced = true
         )
