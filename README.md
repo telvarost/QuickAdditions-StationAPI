@@ -14,6 +14,7 @@ Mod now works on Multiplayer with GlassConfigAPI version 3.0+ used to sync confi
   * Monster, passive (animals), and squid max spawn capacity can be changed.
 * Adds ability to change mob spawn group size.
   * Disabled when PumpkinMoon is installed, as PumpkinMoon will take over setting spawn group size.
+* Adds ability to change max light level at which monsters can spawn.
 
 ### Weather
 * Adds ability to set a Y level above which it will always snow.

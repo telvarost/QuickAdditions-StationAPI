@@ -136,6 +136,14 @@ public class Config {
         public Boolean doNotCountSaddledPigs = false;
 
         @ConfigEntry(
+                name = "Monsters Spawn At Or Below Light Level",
+                description = "4 = Nighttime Light Level",
+                multiplayerSynced = true,
+                maxLength = 7
+        )
+        public Integer monstersSpawnAtOrBelowLightLevel = 7;
+
+        @ConfigEntry(
                 name = "Spawn Group Size",
                 description = "Does not effect ghasts, wolves cap at 8",
                 multiplayerSynced = true,

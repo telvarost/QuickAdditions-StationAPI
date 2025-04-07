@@ -6,6 +6,7 @@
   "plugin": "com.github.telvarost.quickadditions.QuickAdditionsMixinPlugin",
   "mixins": [
     "LivingEntityMixin",
+    "MonsterEntityMixin",
     "NaturalSpawnerGroupSizeMixin",
     "NaturalSpawnerMixin",
     "PigEntityMixin",
