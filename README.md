@@ -42,7 +42,9 @@ Mod now works on Multiplayer with GlassConfigAPI version 3.0+ used to sync confi
 * Adds ability to disable default Minecraft background music.
 * Adds ability to add a main menu song.
   * On first run of the mod a folder named `main-menu-theme` will be created.
-  * Add `mainmenu.ogg`, `mainmenu.mus`, or a `mainmenu.wav` file to this folder, this song will play on the title screen.
+  * Add `.ogg`, `.mus`, or `.wav` files to this folder, these songs will play on the title screen.
+    * A single song is chosen randomly upon entering the title screen and plays.
+    * Song names cannot be the same as vanilla b1.7.3 streaming resource files, if they are the song will not play when chosen.
     * No other file types are supported by default in Minecraft or by this mod.
   * Adds ability to have main menu song override background music.
     * (Vanilla b1.7.3 has Minecraft background music continue to play on main menu if started in-game)

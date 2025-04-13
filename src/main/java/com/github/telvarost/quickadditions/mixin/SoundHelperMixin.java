@@ -20,6 +20,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import paulscode.sound.SoundSystem;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Random;
 
 @Environment(EnvType.CLIENT)
@@ -53,35 +54,36 @@ public abstract class SoundHelperMixin {
                 mainMenuThemeDir.delete();
                 mainMenuThemeDir.mkdirs();
             } else {
-                System.out.println("Looking for mainmenu song in: main-menu-theme/");
+                System.out.println("Looking for main menu songs in: main-menu-theme/");
+                ModHelper.ModHelperFields.musicForMainMenu = new ArrayList<String>();
 
                 File [] oggFiles = mainMenuThemeDir.listFiles(f-> f.toString().endsWith(".ogg"));
                 if (null != oggFiles) {
                     for (int fileIndex = 0; fileIndex < oggFiles.length; fileIndex++) {
-                        System.out.println("Added: " + oggFiles[fileIndex].getName());
-                        if (oggFiles[fileIndex].getName().contains("mainmenu")) {
-                            loadStreaming(oggFiles[fileIndex].getName(), oggFiles[fileIndex]);
-                        }
+                        String songFileName = oggFiles[fileIndex].getName();
+                        loadStreaming(songFileName, oggFiles[fileIndex]);
+                        ModHelper.ModHelperFields.musicForMainMenu.add(songFileName.substring(0, songFileName.length() - 4));
+                        System.out.println("Added: " + songFileName);
                     }
                 }
 
                 File [] musFiles = mainMenuThemeDir.listFiles(f-> f.toString().endsWith(".mus"));
                 if (null != musFiles) {
                     for (int fileIndex = 0; fileIndex < musFiles.length; fileIndex++) {
-                        System.out.println("Added: " + musFiles[fileIndex].getName());
-                        if (musFiles[fileIndex].getName().contains("mainmenu")) {
-                            loadStreaming(musFiles[fileIndex].getName(), musFiles[fileIndex]);
-                        }
+                        String songFileName = musFiles[fileIndex].getName();
+                        loadStreaming(songFileName, musFiles[fileIndex]);
+                        ModHelper.ModHelperFields.musicForMainMenu.add(songFileName.substring(0, songFileName.length() - 4));
+                        System.out.println("Added: " + songFileName);
                     }
                 }
 
                 File [] wavFiles = mainMenuThemeDir.listFiles(f-> f.toString().endsWith(".wav"));
                 if (null != wavFiles) {
                     for (int fileIndex = 0; fileIndex < wavFiles.length; fileIndex++) {
-                        System.out.println("Added: " + wavFiles[fileIndex].getName());
-                        if (wavFiles[fileIndex].getName().contains("mainmenu")) {
-                            loadStreaming(wavFiles[fileIndex].getName(), wavFiles[fileIndex]);
-                        }
+                        String songFileName = wavFiles[fileIndex].getName();
+                        loadStreaming(songFileName, wavFiles[fileIndex]);
+                        ModHelper.ModHelperFields.musicForMainMenu.add(songFileName.substring(0, songFileName.length() - 4));
+                        System.out.println("Added: " + songFileName);
                     }
                 }
             }

@@ -29,6 +29,13 @@ public class MonsterEntityMixin extends MobEntity {
     public int quickAdditions_canSpawn(Random instance, int bound, Operation<Integer> original) {
         int canSpawnAtLightLevelOrBelow = original.call(instance, bound);
 
+//        if (  (null != this.world)
+//           && (null != this.world.dimension)
+//        ) {
+//            /** - Nether mobs have custom spawn mechanics per mob via @Override-ing this method */
+//        }
+
+        /** - Currently applies to any dimension that is not the nether */
         if (Config.config.ENTITY_SPAWN_MECHANICS_CONFIG.monstersSpawnAtOrBelowLightLevel < canSpawnAtLightLevelOrBelow) {
             canSpawnAtLightLevelOrBelow = Config.config.ENTITY_SPAWN_MECHANICS_CONFIG.monstersSpawnAtOrBelowLightLevel;
         }
