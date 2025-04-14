@@ -40,7 +40,7 @@ Mod now works on Multiplayer with GlassConfigAPI version 3.0+ used to sync confi
       * Example song name: `HappyDisco-nether-rainforest-specific.ogg`
         * This song would play in the nether or in the rainforest biome.
 * Adds ability to disable default Minecraft background music.
-* Adds ability to add a main menu song.
+* Adds ability to add a main menu songs.
   * On first run of the mod a folder named `main-menu-theme` will be created.
   * Add `.ogg`, `.mus`, or `.wav` files to this folder, these songs will play on the title screen.
     * A single song is chosen randomly upon entering the title screen and plays.
