@@ -18,7 +18,6 @@ import org.spongepowered.asm.mixin.injection.Constant;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyConstant;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.List;
 
@@ -48,6 +47,29 @@ public abstract class WorldMixin {
     @Unique private int highestBlockYLocation = 0;
     @Unique private BoatEntity skipObject;
 
+    private boolean quickAdditions_canSkipNight() {
+        if (1.0f > Config.config.asleepPlayerPercentageForSkippingNight) {
+            if (this.allPlayersSleeping && !this.isRemote) {
+                int playersFullySleepingCount = 0;
+
+                for (Object var2 : this.players) {
+                    if (((PlayerEntity)var2).isFullyAsleep()) {
+                        playersFullySleepingCount++;
+                    }
+                }
+
+                if (  ( null != this.players )
+                   && ( !this.players.isEmpty() )
+                   && ( ((float) playersFullySleepingCount / this.players.size()) >= Config.config.asleepPlayerPercentageForSkippingNight )
+                ) {
+                    return true;
+                }
+            }
+        }
+
+        return  false;
+    }
+
     @WrapOperation(
             method = "tick",
             at = @At(
@@ -56,8 +78,16 @@ public abstract class WorldMixin {
             )
     )
     public boolean quickAdditions_tickCanSkipNight(World instance, Operation<Boolean> original) {
+        boolean skippingNight;
+
         if (Config.config.bedsSpeedUpNightRatherThanSkipIt) {
-            if (original.call(instance)) {
+            if (1.0f > Config.config.asleepPlayerPercentageForSkippingNight) {
+                skippingNight = quickAdditions_canSkipNight();
+            } else {
+                skippingNight = original.call(instance);
+            }
+
+            if (skippingNight) {
                 boolean var1 = false;
                 if (this.allowMonsterSpawning && this.difficulty >= 1) {
                     var1 = NaturalSpawner.spawnMonstersAndWakePlayers(instance, this.players);
@@ -77,7 +107,13 @@ public abstract class WorldMixin {
 
             return false;
         } else {
-            return original.call(instance);
+            if (1.0f > Config.config.asleepPlayerPercentageForSkippingNight) {
+                skippingNight = quickAdditions_canSkipNight();
+            } else {
+                skippingNight = original.call(instance);
+            }
+
+            return skippingNight;
         }
     }
 
@@ -106,36 +142,6 @@ public abstract class WorldMixin {
             }
 
             ci.cancel();
-        }
-    }
-
-    @Inject(
-            method = "canSkipNight",
-            at = @At("HEAD"),
-            cancellable = true
-    )
-    protected void quickAdditions_canSkipNight(CallbackInfoReturnable<Boolean> cir) {
-        if (1.0f > Config.config.asleepPlayerPercentageForSkippingNight) {
-            if (this.allPlayersSleeping && !this.isRemote) {
-                int playersFullySleepingCount = 0;
-
-                for (Object var2 : this.players) {
-                    if (((PlayerEntity)var2).isFullyAsleep()) {
-                        playersFullySleepingCount++;
-                    }
-                }
-
-                if (  ( null != this.players )
-                   && ( !this.players.isEmpty() )
-                   && ( ((float) playersFullySleepingCount / this.players.size()) >= Config.config.asleepPlayerPercentageForSkippingNight)
-                ) {
-                    cir.setReturnValue(true);
-                } else {
-                    cir.setReturnValue(false);
-                }
-            } else {
-                cir.setReturnValue(false);
-            }
         }
     }
 
