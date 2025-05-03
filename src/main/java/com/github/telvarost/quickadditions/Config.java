@@ -222,6 +222,16 @@ public class Config {
         )
         public Integer musicCoundownRandomIntervalMax = 12000;
 
+        @ConfigEntry(name = "Overlay For Music In Debug Enabled")
+        public Boolean overlayForMusicInDebug = true;
+
+        @ConfigEntry(
+                name = "Overlay For Music In Debug Y Offset",
+                maxLength = 4096,
+                minLength = -4096
+        )
+        public Integer overlayForMusicInDebugYOffset = 0;
+
         @ConfigEntry(
                 name = "Volume: Nether Portal Ambient",
                 description = "Float value between 0.0 (0%) and 1.0 (100%)",

@@ -6,6 +6,7 @@ import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.minecraft.client.option.GameOptions;
 import net.minecraft.client.sound.Sound;
 import net.minecraft.client.sound.SoundEntry;
 import net.minecraft.client.sound.SoundManager;
@@ -39,6 +40,7 @@ public abstract class SoundHelperMixin {
 
     @Shadow private static SoundSystem soundSystem;
 
+    @Shadow private GameOptions gameOptions;
     @Unique private int dimensionId = 0;
 
     @Unique private String biomeTag = "-unknown-";
@@ -146,11 +148,45 @@ public abstract class SoundHelperMixin {
             method = "tick",
             at = @At(
                     value = "INVOKE",
+                    target = "Lpaulscode/sound/SoundSystem;playing(Ljava/lang/String;)Z",
+                    ordinal = 0
+            )
+    )
+    public boolean quickAdditions_tickRegionSpecific(SoundSystem instance, String string, Operation<Boolean> original) {
+        if (gameOptions.debugHud) {
+            if (!instance.playing("BgMusic") && !instance.playing("streaming")) {
+                ModHelper.ModHelperFields.currentBGM = "none";
+            }
+        }
+
+        return original.call(instance, string);
+    }
+
+    @WrapOperation(
+            method = "playStreaming",
+            at = @At(
+                    value = "INVOKE",
+                    target = "Lnet/minecraft/client/sound/SoundEntry;get(Ljava/lang/String;)Lnet/minecraft/client/sound/Sound;"
+            )
+    )
+    public Sound quickAdditions_tickRegionSpecific(SoundEntry instance, String string, Operation<Sound> original) {
+        Sound streamingSong = original.call(instance, string);
+
+        ModHelper.ModHelperFields.currentBGM = streamingSong.id;
+
+        return streamingSong;
+    }
+
+    @WrapOperation(
+            method = "tick",
+            at = @At(
+                    value = "INVOKE",
                     target = "Lnet/minecraft/client/sound/SoundEntry;getSounds()Lnet/minecraft/client/sound/Sound;"
             )
     )
     public Sound quickAdditions_tickRegionSpecific(SoundEntry instance, Operation<Sound> original) {
         Sound currentMusic = original.call(instance);
+        ModHelper.ModHelperFields.currentBGM = currentMusic.id;
 
         if (  (null != currentMusic)
            && (null != currentMusic.id)
