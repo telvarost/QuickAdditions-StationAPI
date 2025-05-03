@@ -172,7 +172,10 @@ public abstract class SoundHelperMixin {
     public Sound quickAdditions_tickRegionSpecific(SoundEntry instance, String string, Operation<Sound> original) {
         Sound streamingSong = original.call(instance, string);
 
-        ModHelper.ModHelperFields.currentBGM = streamingSong.id;
+        if (null != streamingSong)
+        {
+            ModHelper.ModHelperFields.currentBGM = streamingSong.id;
+        }
 
         return streamingSong;
     }
