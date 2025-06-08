@@ -1,7 +1,7 @@
 package com.github.telvarost.quickadditions.events;
 
 import com.github.telvarost.quickadditions.Config;
-import com.github.telvarost.quickadditions.mixin.SoundHelperAccessor;
+import com.github.telvarost.quickadditions.mixin.client.SoundHelperAccessor;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.loader.api.FabricLoader;
 import net.glasslauncher.mods.gcapi3.api.PreConfigSavedListener;

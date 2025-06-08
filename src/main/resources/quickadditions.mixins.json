@@ -14,14 +14,15 @@
     "WorldMixin"
   ],
   "server": [
+    "server.ServerPlayNetworkHandlerMixin"
   ],
   "client": [
-    "GameRendererMixin",
-    "InGameHudMixin",
-    "MainMenuMixin",
-    "MinecraftMixin",
-    "SoundHelperAccessor",
-    "SoundHelperMixin"
+    "client.GameRendererMixin",
+    "client.InGameHudMixin",
+    "client.MainMenuMixin",
+    "client.MinecraftMixin",
+    "client.SoundHelperAccessor",
+    "client.SoundHelperMixin"
   ],
   "injectors": {
     "defaultRequire": 1

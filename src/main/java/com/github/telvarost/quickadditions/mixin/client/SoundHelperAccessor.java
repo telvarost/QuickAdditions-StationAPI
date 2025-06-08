@@ -1,4 +1,4 @@
-package com.github.telvarost.quickadditions.mixin;
+package com.github.telvarost.quickadditions.mixin.client;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;

@@ -55,6 +55,14 @@ public class Config {
         public Boolean forceDisplayActive = false;
 
         @ConfigEntry(
+                name = "Spawn Protection Radius",
+                description = "Restart required for changes to take effect",
+                multiplayerSynced = true,
+                maxLength = 128
+        )
+        public Integer SPAWN_PROTECTION_RADIUS = 16;
+
+        @ConfigEntry(
                 name = "Soul Sand Crafting Recipe Enable",
                 description = "Restart required for changes to take effect",
                 multiplayerSynced = true

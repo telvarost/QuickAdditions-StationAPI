@@ -1,4 +1,4 @@
-package com.github.telvarost.quickadditions.mixin;
+package com.github.telvarost.quickadditions.mixin.client;
 
 import com.github.telvarost.quickadditions.Config;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;

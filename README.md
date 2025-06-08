@@ -59,6 +59,7 @@ Mod now works on Multiplayer with GlassConfigAPI version 3.0+ used to sync confi
   * (Takes about 30 seconds to sleep the entire night away using this method)
 * Adds ability to exit beds by clicking or swinging the hand.
 * Adds ability to configure percentage of sleeping players needed to skip nighttime.
+* Adds ability to configure server spawn protection radius.
 
 ## List of added recipes
 
