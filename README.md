@@ -95,7 +95,7 @@ Mod now works on Multiplayer with GlassConfigAPI version 3.0+ used to sync confi
 4. Add Glass Networking to the mod folder for the instance: https://modrinth.com/mod/glass-networking
 5. Add StationAPI to the mod folder for the instance: https://modrinth.com/mod/stationapi
 6. (Optional) Add Mod Menu to the mod folder for the instance: https://modrinth.com/mod/modmenu-beta
-7. Add this mod to the mod folder for the instance: https://github.com/telvarost/BetaTweaks-StationAPI/releases
+7. Add this mod to the mod folder for the instance: https://github.com/telvarost/QuickAdditions-StationAPI/releases
 8. Run and enjoy! 👍
 
 ## Feedback
