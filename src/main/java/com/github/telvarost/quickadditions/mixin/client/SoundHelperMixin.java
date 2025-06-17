@@ -152,7 +152,7 @@ public abstract class SoundHelperMixin {
                     ordinal = 0
             )
     )
-    public boolean quickAdditions_tickRegionSpecific(SoundSystem instance, String string, Operation<Boolean> original) {
+    public boolean quickAdditions_tickIsSongOver(SoundSystem instance, String string, Operation<Boolean> original) {
         if (gameOptions.debugHud) {
             if (!instance.playing("BgMusic") && !instance.playing("streaming")) {
                 ModHelper.ModHelperFields.currentBGM = "none";
@@ -169,7 +169,7 @@ public abstract class SoundHelperMixin {
                     target = "Lnet/minecraft/client/sound/SoundEntry;get(Ljava/lang/String;)Lnet/minecraft/client/sound/Sound;"
             )
     )
-    public Sound quickAdditions_tickRegionSpecific(SoundEntry instance, String string, Operation<Sound> original) {
+    public Sound quickAdditions_tickGetStreamingSong(SoundEntry instance, String string, Operation<Sound> original) {
         Sound streamingSong = original.call(instance, string);
 
         if (null != streamingSong)
@@ -187,7 +187,7 @@ public abstract class SoundHelperMixin {
                     target = "Lnet/minecraft/client/sound/SoundEntry;getSounds()Lnet/minecraft/client/sound/Sound;"
             )
     )
-    public Sound quickAdditions_tickRegionSpecific(SoundEntry instance, Operation<Sound> original) {
+    public Sound quickAdditions_tickGetMusicSong(SoundEntry instance, Operation<Sound> original) {
         Sound currentMusic = original.call(instance);
         ModHelper.ModHelperFields.currentBGM = currentMusic.id;
 
