@@ -2,6 +2,7 @@ package com.github.telvarost.quickadditions.mixin.client;
 
 import com.github.telvarost.quickadditions.Config;
 import com.github.telvarost.quickadditions.ModHelper;
+import com.github.telvarost.zastavkaapi.ZastavkaHelper;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import net.fabricmc.api.EnvType;
@@ -32,13 +33,9 @@ public abstract class SoundHelperMixin {
 
     @Shadow private Random random;
 
-    @Shadow private SoundEntry music;
-
     @Shadow public abstract void loadMusic(String string, File file);
 
     @Shadow public abstract void loadStreaming(String string, File file);
-
-    @Shadow private static SoundSystem soundSystem;
 
     @Shadow private GameOptions gameOptions;
     @Unique private int dimensionId = 0;
@@ -132,18 +129,6 @@ public abstract class SoundHelperMixin {
         this.timeUntilNextSong = this.random.nextInt(Config.config.MUSIC_CONFIG.musicCoundownRandomIntervalMax);
     }
 
-    @Inject(
-            method = "tick",
-            at = @At("HEAD"),
-            cancellable = true
-    )
-    public void quickAdditions_tickCancelSong(CallbackInfo ci) {
-        if (ModHelper.ModHelperFields.cancelCurrentBGM) {
-            ModHelper.ModHelperFields.cancelCurrentBGM = false;
-            soundSystem.stop("BgMusic");
-        }
-    }
-
     @WrapOperation(
             method = "tick",
             at = @At(
@@ -152,139 +137,18 @@ public abstract class SoundHelperMixin {
                     ordinal = 0
             )
     )
-    public boolean quickAdditions_tickIsSongOver(SoundSystem instance, String string, Operation<Boolean> original) {
+    public boolean quickAdditions_tickDebugDisplay(SoundSystem instance, String string, Operation<Boolean> original) {
         if (gameOptions.debugHud) {
-            if (!instance.playing("BgMusic") && !instance.playing("streaming")) {
+            if (instance.playing("BgMusic")) {
+                ModHelper.ModHelperFields.currentBGM = ZastavkaHelper.currentMusicSong;
+            } else if (instance.playing("streaming")) {
+                ModHelper.ModHelperFields.currentBGM = ZastavkaHelper.currentStreamingSong;
+            } else {
                 ModHelper.ModHelperFields.currentBGM = "none";
             }
         }
 
         return original.call(instance, string);
-    }
-
-    @WrapOperation(
-            method = "playStreaming",
-            at = @At(
-                    value = "INVOKE",
-                    target = "Lnet/minecraft/client/sound/SoundEntry;get(Ljava/lang/String;)Lnet/minecraft/client/sound/Sound;"
-            )
-    )
-    public Sound quickAdditions_tickGetStreamingSong(SoundEntry instance, String string, Operation<Sound> original) {
-        Sound streamingSong = original.call(instance, string);
-
-        if (null != streamingSong)
-        {
-            ModHelper.ModHelperFields.currentBGM = streamingSong.id;
-        }
-
-        return streamingSong;
-    }
-
-    @WrapOperation(
-            method = "tick",
-            at = @At(
-                    value = "INVOKE",
-                    target = "Lnet/minecraft/client/sound/SoundEntry;getSounds()Lnet/minecraft/client/sound/Sound;"
-            )
-    )
-    public Sound quickAdditions_tickGetMusicSong(SoundEntry instance, Operation<Sound> original) {
-        Sound currentMusic = original.call(instance);
-        ModHelper.ModHelperFields.currentBGM = currentMusic.id;
-
-        if (  (null != currentMusic)
-           && (null != currentMusic.id)
-           && (currentMusic.id.contains("-specific."))
-        ) {
-            PlayerEntity player = PlayerHelper.getPlayerFromGame();
-            if (null != player) {
-                dimensionId = player.dimensionId;
-            }
-
-            if (currentMusic.id.contains("-level" + dimensionId + "-")) {
-                ModHelper.ModHelperFields.songLevelId = dimensionId;
-                return currentMusic;
-            }
-
-            if (0 == dimensionId) {
-                if (currentMusic.id.contains("-overworld-")) {
-                    ModHelper.ModHelperFields.songLevelId = dimensionId;
-                    return currentMusic;
-                }
-            } else if (-1 == dimensionId) {
-                if (currentMusic.id.contains("-nether-")) {
-                    ModHelper.ModHelperFields.songLevelId = dimensionId;
-                    return currentMusic;
-                }
-            }
-
-            if (null != player) {
-                if (null != player.world) {
-                    if (null != player.world.method_1781()) {
-                        Biome biome = player.world.method_1781().getBiome((int) Math.floor(player.x), (int) Math.floor(player.z));
-                        if (null != biome && null != biome.name) {
-                            biomeTag = '-' + biome.name.toLowerCase() + '-';
-                        }
-                    }
-                }
-            }
-
-            if (currentMusic.id.contains(biomeTag)) {
-                ModHelper.ModHelperFields.songLevelId = Integer.MAX_VALUE;
-                return currentMusic;
-            }
-
-            System.out.println("Skipping: " + currentMusic.id);
-            ModHelper.ModHelperFields.songLevelId = Integer.MAX_VALUE;
-            return null;
-        } else if (  (null != currentMusic)
-                  && (null != currentMusic.soundFile)
-                  && (currentMusic.soundFile.toString().contains("-specific."))
-        ) {
-            PlayerEntity player = PlayerHelper.getPlayerFromGame();
-            if (null != player) {
-                dimensionId = player.dimensionId;
-            }
-
-            if (currentMusic.soundFile.toString().contains("-level" + dimensionId + "-")) {
-                ModHelper.ModHelperFields.songLevelId = dimensionId;
-                return currentMusic;
-            }
-
-            if (0 == dimensionId) {
-                if (currentMusic.soundFile.toString().contains("-overworld-")) {
-                    ModHelper.ModHelperFields.songLevelId = dimensionId;
-                    return currentMusic;
-                }
-            } else if (-1 == dimensionId) {
-                if (currentMusic.soundFile.toString().contains("-nether-")) {
-                    ModHelper.ModHelperFields.songLevelId = dimensionId;
-                    return currentMusic;
-                }
-            }
-
-            if (null != player) {
-                if (null != player.world) {
-                    if (null != player.world.method_1781()) {
-                        Biome biome = player.world.method_1781().getBiome((int) Math.floor(player.x), (int) Math.floor(player.z));
-                        if (null != biome && null != biome.name) {
-                            biomeTag = '-' + biome.name.toLowerCase() + '-';
-                        }
-                    }
-                }
-            }
-
-            if (currentMusic.soundFile.toString().contains(biomeTag)) {
-                ModHelper.ModHelperFields.songLevelId = Integer.MAX_VALUE;
-                return currentMusic;
-            }
-
-            System.out.println("Skipping: " + currentMusic.soundFile);
-            ModHelper.ModHelperFields.songLevelId = Integer.MAX_VALUE;
-            return null;
-        }
-
-        ModHelper.ModHelperFields.songLevelId = Integer.MAX_VALUE;
-        return currentMusic;
     }
 
     @ModifyConstant(

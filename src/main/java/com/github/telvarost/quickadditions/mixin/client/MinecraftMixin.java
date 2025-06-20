@@ -1,7 +1,7 @@
 package com.github.telvarost.quickadditions.mixin.client;
 
 import com.github.telvarost.quickadditions.Config;
-import com.github.telvarost.quickadditions.ModHelper;
+import com.github.telvarost.zastavkaapi.ZastavkaHelper;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.Minecraft;
@@ -42,10 +42,10 @@ public class MinecraftMixin {
     )
     public void quickAdditions_changeDimension(CallbackInfo ci) {
         if (Config.config.MUSIC_CONFIG.stopCurrentBgmOnPortalUse) {
-            ModHelper.ModHelperFields.cancelCurrentBGM = true;
+            ZastavkaHelper.cancelCurrentBGM = true;
         } else if (Config.config.MUSIC_CONFIG.stopDimensionSpecificSongOnPortalUse) {
-            if (ModHelper.ModHelperFields.songLevelId == this.player.dimensionId) {
-                ModHelper.ModHelperFields.cancelCurrentBGM = true;
+            if (ZastavkaHelper.songLevelId == this.player.dimensionId) {
+                ZastavkaHelper.cancelCurrentBGM = true;
             }
         }
     }

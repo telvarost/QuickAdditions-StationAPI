@@ -1,6 +1,7 @@
 # QuickAdditions StationAPI Edition for Minecraft Beta 1.7.3
 
 A StationAPI mod for Minecraft Beta 1.7.3 that adds in features that were requested, but didn't have enough time to make a fully fledged mod for the request.
+- Requires [Zastavka API](https://modrinth.com/mod/zastavkaapi) (used to make music biome/dimension specific and to get current BGM)
 
 # Quick Additions
 Mod now works on Multiplayer with GlassConfigAPI version 3.0+ used to sync configs!
@@ -94,9 +95,10 @@ Mod now works on Multiplayer with GlassConfigAPI version 3.0+ used to sync confi
 3. Add GlassConfigAPI 3.0.2+ to the mod folder for the instance: https://modrinth.com/mod/glass-config-api
 4. Add Glass Networking to the mod folder for the instance: https://modrinth.com/mod/glass-networking
 5. Add StationAPI to the mod folder for the instance: https://modrinth.com/mod/stationapi
-6. (Optional) Add Mod Menu to the mod folder for the instance: https://modrinth.com/mod/modmenu-beta
-7. Add this mod to the mod folder for the instance: https://github.com/telvarost/QuickAdditions-StationAPI/releases
-8. Run and enjoy! 👍
+6. Add ZastavkaAPI to the mod folder for the instance: https://modrinth.com/mod/zastavkaapi
+7. (Optional) Add Mod Menu to the mod folder for the instance: https://modrinth.com/mod/modmenu-beta
+8. Add this mod to the mod folder for the instance: https://github.com/telvarost/QuickAdditions-StationAPI/releases
+9. Run and enjoy! 👍
 
 ## Feedback
 

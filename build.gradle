@@ -116,6 +116,8 @@ dependencies {
 	modImplementation("net.danygames2014:spawneggs:${project.spawneggs_version}") {
 		transitive false
 	}
+
+	modImplementation files("lib/ZastavkaAPI-1.0.0.jar")
 }
 
 processResources {
