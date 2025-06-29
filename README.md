@@ -1,4 +1,4 @@
-# QuickAdditions StationAPI Edition for Minecraft Beta 1.7.3
+# QuickAdditions StationAPI for Minecraft Beta 1.7.3
 
 A StationAPI mod for Minecraft Beta 1.7.3 that adds in features that were requested, but didn't have enough time to make a fully fledged mod for the request.
 - Requires [Zastavka API](https://modrinth.com/mod/zastavkaapi) (used to make music biome/dimension specific and to get current BGM)
