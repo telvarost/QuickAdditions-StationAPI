@@ -50,6 +50,7 @@ Mod now works on Multiplayer with GlassConfigAPI version 3.0+ used to sync confi
   * Adds ability to have main menu song override background music.
     * (Vanilla b1.7.3 has Minecraft background music continue to play on main menu if started in-game)
   * Adds ability to view currently playing music in the debug overlay (F3)
+    * Compatible with [Better F3](https://modrinth.com/mod/betterf3-stationapi) using their module system
 
 ### Misc.
 * Adds ability to give the player missing achievements that they may have already achieved.
