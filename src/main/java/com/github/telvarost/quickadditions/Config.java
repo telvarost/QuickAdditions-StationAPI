@@ -230,7 +230,10 @@ public class Config {
         )
         public Integer musicCoundownRandomIntervalMax = 12000;
 
-        @ConfigEntry(name = "Overlay For Music In Debug Enabled")
+        @ConfigEntry(
+                name = "Overlay For Music In Debug Enabled",
+                description = "If using Better F3 use its module config"
+        )
         public Boolean overlayForMusicInDebug = true;
 
         @ConfigEntry(

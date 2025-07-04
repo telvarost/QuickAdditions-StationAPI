@@ -17,6 +17,7 @@
     "server.ServerPlayNetworkHandlerMixin"
   ],
   "client": [
+    "client.BetterF3Mixin",
     "client.GameRendererMixin",
     "client.InGameHudMixin",
     "client.MainMenuMixin",

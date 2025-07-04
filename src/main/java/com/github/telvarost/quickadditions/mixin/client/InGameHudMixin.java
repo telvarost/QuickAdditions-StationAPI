@@ -33,7 +33,7 @@ public class InGameHudMixin extends DrawContext {
 					"Music: " + ModHelper.ModHelperFields.currentBGM,
 					2,
 					(144 + Config.config.MUSIC_CONFIG.overlayForMusicInDebugYOffset),
-					14737632
+					0xE0E0E0
 			);
 		}
 	}

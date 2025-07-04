@@ -124,6 +124,10 @@ dependencies {
 	modImplementation ("maven.modrinth:zastavkaapi:${project.zastavkaapi_version}") {
 		transitive false
 	}
+
+	modImplementation ("maven.modrinth:betterf3-stationapi:${project.betterf3_version}") {
+		transitive false
+	}
 }
 
 processResources {

@@ -8,8 +8,6 @@ import net.modificationstation.stationapi.api.event.recipe.RecipeRegisterEvent;
 import net.modificationstation.stationapi.api.recipe.CraftingRegistry;
 import net.modificationstation.stationapi.api.util.Identifier;
 
-import java.util.List;
-
 public class RecipeListener {
 
     @EventListener
