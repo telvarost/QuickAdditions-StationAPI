@@ -41,6 +41,8 @@ Mod now works on Multiplayer with GlassConfigAPI version 3.0+ used to sync confi
       * Example song name: `HappyDisco-nether-rainforest-specific.ogg`
         * This song would play in the nether or in the rainforest biome.
 * Adds ability to disable default Minecraft background music.
+* Adds ability to view currently playing music in the debug overlay (F3).
+  * Compatible with [Better F3](https://modrinth.com/mod/betterf3-stationapi) using their module system.
 * Adds ability to add main menu songs.
   * On first run of the mod a folder named `main-menu-theme` will be created.
   * Add `.ogg`, `.mus`, or `.wav` files to this folder, these songs will play on the title screen.
@@ -49,8 +51,6 @@ Mod now works on Multiplayer with GlassConfigAPI version 3.0+ used to sync confi
     * No other file types are supported by default in Minecraft or by this mod.
   * Adds ability to have main menu song override background music.
     * (Vanilla b1.7.3 has Minecraft background music continue to play on main menu if started in-game)
-  * Adds ability to view currently playing music in the debug overlay (F3)
-    * Compatible with [Better F3](https://modrinth.com/mod/betterf3-stationapi) using their module system
 
 ### Misc.
 * Adds ability to give the player missing achievements that they may have already achieved.
