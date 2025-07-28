@@ -18,7 +18,7 @@ public interface SoundHelperAccessor {
     @Accessor("streamingSounds")
     SoundEntry getStreaming();
     @Accessor("started")
-    boolean getInitialized();
+    boolean getStarted();
 
     /** - Setters */
     @Accessor("timeUntilNextSong")

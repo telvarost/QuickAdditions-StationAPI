@@ -23,6 +23,7 @@ import java.util.Random;
 public class MainMenuMixin extends Screen {
 
     @Shadow private float ticks;
+    @Unique private boolean startedMainMenuSong = false;
 
     @Inject(
             method = "init",
@@ -30,13 +31,14 @@ public class MainMenuMixin extends Screen {
             cancellable = true
     )
     public void init(CallbackInfo ci) {
-        if (ticks <= 0) {
+        if (ticks <= 0 || !startedMainMenuSong) {
             if (Config.config.MUSIC_CONFIG.mainMenuThemeEnabled) {
                 playMainMenuTheme();
             }
         } else {
             SoundSystem soundSystem = ((SoundHelperAccessor)minecraft.soundManager).getSoundSystem();
-            if (soundSystem.playing("streaming")) {
+            boolean started = ((SoundHelperAccessor)minecraft.soundManager).getStarted();
+            if (started && soundSystem.playing("streaming")) {
                 soundSystem.setVolume("streaming", minecraft.options.musicVolume);
             }
         }
@@ -46,8 +48,8 @@ public class MainMenuMixin extends Screen {
     private void playMainMenuTheme() {
         SoundSystem soundSystem = ((SoundHelperAccessor)minecraft.soundManager).getSoundSystem();
         SoundEntry streaming = ((SoundHelperAccessor)minecraft.soundManager).getStreaming();
-        boolean initialized = ((SoundHelperAccessor)minecraft.soundManager).getInitialized();
-        if (initialized && minecraft.options.musicVolume != 0.0F) {
+        boolean started = ((SoundHelperAccessor)minecraft.soundManager).getStarted();
+        if (started && minecraft.options.musicVolume != 0.0F) {
             if (  (null != ModHelper.ModHelperFields.musicForMainMenu)
                && (!ModHelper.ModHelperFields.musicForMainMenu.isEmpty())
             ) {
@@ -55,8 +57,8 @@ public class MainMenuMixin extends Screen {
                 Random rand = new Random(System.currentTimeMillis() + seedRand.nextInt());
                 int selectedMainMenuTheme = rand.nextInt(ModHelper.ModHelperFields.musicForMainMenu.size());
 
-                Sound var1 = streaming.get(ModHelper.ModHelperFields.musicForMainMenu.get(selectedMainMenuTheme));
-                if (var1 != null) {
+                Sound sound = streaming.get(ModHelper.ModHelperFields.musicForMainMenu.get(selectedMainMenuTheme));
+                if (sound != null) {
                     if (Config.config.MUSIC_CONFIG.mainMenuThemeOverridesBGM) {
                         if (soundSystem.playing("BgMusic")) {
                             soundSystem.stop("BgMusic");
@@ -65,9 +67,10 @@ public class MainMenuMixin extends Screen {
 
                     if (!soundSystem.playing("BgMusic") || Config.config.MUSIC_CONFIG.mainMenuThemeOverridesBGM) {
                         if (!soundSystem.playing("streaming")) {
-                            soundSystem.backgroundMusic("streaming", var1.soundFile, var1.id, false);
+                            soundSystem.backgroundMusic("streaming", sound.soundFile, sound.id, false);
                             soundSystem.setVolume("streaming", minecraft.options.musicVolume);
                             soundSystem.play("streaming");
+                            startedMainMenuSong = true;
                         } else {
                             soundSystem.setVolume("streaming", minecraft.options.musicVolume);
                         }
