@@ -287,6 +287,13 @@ public class Config {
         public Integer alwaysSnowAboveThisYLevel = 100;
 
         @ConfigEntry(
+                name = "Disable Rain In Savanna Biomes",
+                description = "Restart required for changes to take effect",
+                multiplayerSynced = true
+        )
+        public Boolean disableRainInSavannaBiomes = false;
+
+        @ConfigEntry(
                 name = "Sleep Only Resets Weather When Raining",
                 multiplayerSynced = true
         )
