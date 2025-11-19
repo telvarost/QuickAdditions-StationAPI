@@ -7,7 +7,7 @@ A StationAPI mod for Minecraft Beta 1.7.3 that adds in features that were reques
 Mod now works on Multiplayer with GlassConfigAPI version 3.0+ used to sync configs!
 
 ### Entity Spawning Mechanics
-* Adds ability to control which vanilla living entities can spawn from natural biome spawn mechanics.
+* Adds ability to control which vanilla entities can spawn from biome spawn mechanics.
 * Adds ability to disable living entity despawning.
 * Adds ability to disable saddled pig despawning.
   * Also adds the ability to skip saddled pigs in the passive spawn count.
