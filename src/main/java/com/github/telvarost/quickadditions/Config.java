@@ -56,9 +56,9 @@ public class Config {
 
         @ConfigEntry(
                 name = "Spawn Protection Radius",
-                description = "Restart required for changes to take effect",
+                description = "Restart required; Overridden By UniTweaks",
                 multiplayerSynced = true,
-                maxLength = 128
+                maxLength = 256
         )
         public Integer SPAWN_PROTECTION_RADIUS = 16;
 

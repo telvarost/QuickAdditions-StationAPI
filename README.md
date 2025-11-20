@@ -64,6 +64,8 @@ Mod now works on Multiplayer with GlassConfigAPI version 3.0+ used to sync confi
 * Adds ability to exit beds by clicking or swinging the hand.
 * Adds ability to configure percentage of sleeping players needed to skip nighttime.
 * Adds ability to configure server spawn protection radius.
+  * Overridden by UniTweaks.
+    * Set the value for spawn protection radius in the server.properties file instead when UniTweaks is loaded.
 
 ## List of added recipes
 

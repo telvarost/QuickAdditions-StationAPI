@@ -17,6 +17,8 @@ public final class QuickAdditionsMixinPlugin implements IMixinConfigPlugin {
             return !FabricLoader.getInstance().isModLoaded("pumpkin_moon");
         } else if (mixinClassName.equals("com.github.telvarost.quickadditions.mixin.client.BetterF3Mixin")) {
             return FabricLoader.getInstance().isModLoaded("betterf3");
+        } else if (mixinClassName.equals("com.github.telvarost.quickadditions.mixin.server.ServerPlayNetworkHandlerMixin")) {
+            return !FabricLoader.getInstance().isModLoaded("unitweaks");
         } else {
             return true;
         }
