@@ -86,7 +86,7 @@ dependencies {
 	implementation(include("me.carleslc:Simple-Yaml:1.8.4") as Dependency)
 
 	// Optional, but convenient mods for mod creators and users alike.
-	modImplementation("net.glasslauncher.mods:ModMenu:${project.modmenu_version}") {
+	modImplementation("net.danygames2014:modmenu:${project.modmenu_version}") {
 		transitive false
 	}
 
