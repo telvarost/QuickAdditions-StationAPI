@@ -1,19 +1,23 @@
 plugins {
 	id 'maven-publish'
-	id 'fabric-loom' version '1.9.2'
-	id 'babric-loom-extension' version '1.9.4'
+	id 'fabric-loom' version '1.14.9'
+	id 'babric-loom-extension' version '1.14.1'
 }
 
-sourceCompatibility = JavaVersion.VERSION_17
-targetCompatibility = JavaVersion.VERSION_17
-
-archivesBaseName = project.archives_base_name
 version = project.mod_version
 group = project.maven_group
 
+base {
+	archivesName = project.archives_base_name
+}
+
+java {
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(17)
+	}
+}
+
 loom {
-	customMinecraftManifest.set("https://babric.github.io/manifest-polyfill/${minecraft_version}.json")
-	intermediaryUrl.set("https://maven.glass-launcher.net/babric/babric/intermediary/%1\$s/intermediary-%1\$s-v2.jar")
 	accessWidenerPath = file("src/main/resources/quickadditions.accesswidener")
 }
 
@@ -82,7 +86,7 @@ dependencies {
 	implementation(include("me.carleslc:Simple-Yaml:1.8.4") as Dependency)
 
 	// Optional, but convenient mods for mod creators and users alike.
-	modImplementation("net.glasslauncher.mods:ModMenu:${project.modmenu_version}") {
+	modImplementation("net.danygames2014:modmenu:${project.modmenu_version}") {
 		transitive false
 	}
 
@@ -156,7 +160,7 @@ java {
 
 jar {
 	from("LICENSE") {
-		rename { "${it}_${project.archivesBaseName}"}
+		rename { "${it}_" + base.archivesName.get() }
 	}
 }
 

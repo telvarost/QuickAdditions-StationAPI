@@ -31,6 +31,9 @@
     ],
     "gcapi3:presave": [
       "com.github.telvarost.quickadditions.events.ConfigListener"
+    ],
+    "betterf3:event_bus_client": [
+      "com.github.telvarost.quickadditions.events.init.ModuleListener"
     ]
   },
   "mixins": [
