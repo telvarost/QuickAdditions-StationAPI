@@ -24,10 +24,10 @@
   "client": [
     "client.GameRendererMixin",
     "client.InGameHudMixin",
-    "client.MainMenuMixin",
     "client.MinecraftMixin",
-    "client.SoundHelperAccessor",
-    "client.SoundHelperMixin"
+    "client.SoundManagerAccessor",
+    "client.SoundManagerMixin",
+    "client.TitleScreenMixin"
   ],
   "injectors": {
     "defaultRequire": 1

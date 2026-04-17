@@ -288,6 +288,12 @@ public class Config {
         public Boolean stopDimensionSpecificSongOnPortalUse = true;
 
         @ConfigEntry(
+                name = "Disable Background Music",
+                description = "Disables randomly playing background music"
+        )
+        public Boolean disableBackgroundMusic = false;
+
+        @ConfigEntry(
                 name = "Main Menu Theme Enabled",
                 description = "Plays 'mainmenu' song file if one is found"
         )

@@ -8,12 +8,7 @@ import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.option.GameOptions;
-import net.minecraft.client.sound.Sound;
-import net.minecraft.client.sound.SoundEntry;
 import net.minecraft.client.sound.SoundManager;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.world.biome.Biome;
-import net.modificationstation.stationapi.api.entity.player.PlayerHelper;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
@@ -22,12 +17,13 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import paulscode.sound.SoundSystem;
 
 import java.io.File;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Random;
 
 @Environment(EnvType.CLIENT)
 @Mixin(SoundManager.class)
-public abstract class SoundHelperMixin {
+public abstract class SoundManagerMixin {
 
     @Shadow private int timeUntilNextSong;
 
@@ -148,30 +144,23 @@ public abstract class SoundHelperMixin {
             }
         }
 
-        return original.call(instance, string);
+        if (Config.config.MUSIC_CONFIG.disableBackgroundMusic) {
+            return true;
+        } else {
+            return original.call(instance, string);
+        }
     }
 
-    @ModifyConstant(
+    @WrapOperation(
             method = "tick",
-            constant = @Constant(
-                    intValue = 12000,
-                    ordinal = 0
+            at = @At(
+                    value = "INVOKE",
+                    target = "Lpaulscode/sound/SoundSystem;backgroundMusic(Ljava/lang/String;Ljava/net/URL;Ljava/lang/String;Z)V"
             )
     )
-    private int quickAdditions_handleBackgroundMusicRandomIntervalMax(int constant) {
-        return Config.config.MUSIC_CONFIG.musicCoundownRandomIntervalMax;
-    }
-
-
-    @ModifyConstant(
-            method = "tick",
-            constant = @Constant(
-                    intValue = 12000,
-                    ordinal = 1
-            )
-    )
-    private int quickAdditions_handleBackgroundMusicRandomIntervalMin(int constant) {
-        return Config.config.MUSIC_CONFIG.musicCoundownRandomIntervalMin;
+    public void quickAdditions_tickChangeBackgroundMusicInterval(SoundSystem instance, String string, URL uRL, String string2, boolean bl, Operation<Void> original) {
+        this.timeUntilNextSong = this.random.nextInt(Config.config.MUSIC_CONFIG.musicCoundownRandomIntervalMax) + Config.config.MUSIC_CONFIG.musicCoundownRandomIntervalMin;
+        original.call(instance, string, uRL, string2, bl);
     }
 
     @WrapOperation(

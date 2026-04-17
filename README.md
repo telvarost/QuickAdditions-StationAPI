@@ -28,6 +28,7 @@ Mod now works on Multiplayer with GlassConfigAPI version 3.0+ used to sync confi
 ### Music
 * Adds ability to lower ambient nether portal, rain, ghast, and cave sounds.
 * Adds ability to change background music countdown timer min and max interval values.
+  * Also, adds the ability to disable random background music entirely.
 * Adds ability to add custom background music to the game.
   * On first run of the mod a folder named `custom-music` will be created.
   * Add `.ogg`, `.mus`, or `.wav` files to this folder, and they will have a random chance to play in-game.

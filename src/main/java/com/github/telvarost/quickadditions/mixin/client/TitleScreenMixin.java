@@ -20,7 +20,7 @@ import java.util.Random;
 
 @Environment(EnvType.CLIENT)
 @Mixin(TitleScreen.class)
-public class MainMenuMixin extends Screen {
+public class TitleScreenMixin extends Screen {
 
     @Shadow private float ticks;
     @Unique private boolean startedMainMenuSong = false;
@@ -36,8 +36,8 @@ public class MainMenuMixin extends Screen {
                 playMainMenuTheme();
             }
         } else {
-            SoundSystem soundSystem = ((SoundHelperAccessor)minecraft.soundManager).getSoundSystem();
-            boolean started = ((SoundHelperAccessor)minecraft.soundManager).getStarted();
+            SoundSystem soundSystem = ((SoundManagerAccessor)minecraft.soundManager).getSoundSystem();
+            boolean started = ((SoundManagerAccessor)minecraft.soundManager).getStarted();
             if (started && soundSystem.playing("streaming")) {
                 soundSystem.setVolume("streaming", minecraft.options.musicVolume);
             }
@@ -46,9 +46,9 @@ public class MainMenuMixin extends Screen {
 
     @Unique
     private void playMainMenuTheme() {
-        SoundSystem soundSystem = ((SoundHelperAccessor)minecraft.soundManager).getSoundSystem();
-        SoundEntry streaming = ((SoundHelperAccessor)minecraft.soundManager).getStreaming();
-        boolean started = ((SoundHelperAccessor)minecraft.soundManager).getStarted();
+        SoundSystem soundSystem = ((SoundManagerAccessor)minecraft.soundManager).getSoundSystem();
+        SoundEntry streaming = ((SoundManagerAccessor)minecraft.soundManager).getStreaming();
+        boolean started = ((SoundManagerAccessor)minecraft.soundManager).getStarted();
         if (started && minecraft.options.musicVolume != 0.0F) {
             if (  (null != ModHelper.ModHelperFields.musicForMainMenu)
                && (!ModHelper.ModHelperFields.musicForMainMenu.isEmpty())

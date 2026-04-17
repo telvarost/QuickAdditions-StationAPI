@@ -1,7 +1,6 @@
 package com.github.telvarost.quickadditions.events;
 
-import com.github.telvarost.quickadditions.Config;
-import com.github.telvarost.quickadditions.mixin.client.SoundHelperAccessor;
+import com.github.telvarost.quickadditions.mixin.client.SoundManagerAccessor;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.loader.api.FabricLoader;
 import net.glasslauncher.mods.gcapi3.api.PreConfigSavedListener;
@@ -12,6 +11,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.PlayerEntity;
 import net.modificationstation.stationapi.api.entity.player.PlayerHelper;
 import org.simpleyaml.configuration.ConfigurationSection;
+import paulscode.sound.SoundSystem;
 
 import java.util.Random;
 
@@ -24,8 +24,19 @@ public class ConfigListener implements PreConfigSavedListener {
         if(FabricLoader.getInstance().getEnvironmentType() == EnvType.CLIENT){
             Minecraft minecraft = (Minecraft)FabricLoader.getInstance().getGameInstance();
             if (null != minecraft) {
-                Random rand = new Random();
-                ((SoundHelperAccessor)minecraft.soundManager).setMusicCountdown(rand.nextInt(Config.config.MUSIC_CONFIG.musicCoundownRandomIntervalMax) + Config.config.MUSIC_CONFIG.musicCoundownRandomIntervalMin);
+                ConfigurationSection musicJsonObject = newValues.getConfigurationSection("MUSIC_CONFIG");
+                if (null != musicJsonObject) {
+                    Random rand = new Random();
+                    if (musicJsonObject.getBoolean("disableBackgroundMusic", false)) {
+                        SoundSystem soundSystem = ((SoundManagerAccessor)minecraft.soundManager).getSoundSystem();
+                        if (null != soundSystem && soundSystem.playing("BgMusic")) {
+                            soundSystem.stop("BgMusic");
+                        }
+                    } else {
+                        ((SoundManagerAccessor)minecraft.soundManager).setMusicCountdown( rand.nextInt(musicJsonObject.getInt("musicCoundownRandomIntervalMax", 12000))
+                                                                                        + musicJsonObject.getInt("musicCoundownRandomIntervalMin", 12000) );
+                    }
+                }
 
                 PlayerEntity player = PlayerHelper.getPlayerFromGame();
                 if (null != player) {

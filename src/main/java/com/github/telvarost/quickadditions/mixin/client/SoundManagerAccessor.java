@@ -10,7 +10,7 @@ import paulscode.sound.SoundSystem;
 
 @Environment(EnvType.CLIENT)
 @Mixin(SoundManager.class)
-public interface SoundHelperAccessor {
+public interface SoundManagerAccessor {
 
     /** - Getters */
     @Accessor("soundSystem")
