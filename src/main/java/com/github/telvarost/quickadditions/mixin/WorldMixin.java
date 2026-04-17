@@ -14,13 +14,12 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Constant;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.ModifyConstant;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.List;
+import java.util.Random;
 
 @Mixin(World.class)
 public abstract class WorldMixin {
@@ -44,6 +43,8 @@ public abstract class WorldMixin {
     @Shadow public abstract boolean isThundering();
 
     @Shadow protected abstract void clearWeather();
+
+    @Shadow public Random random;
 
     @Unique private int highestBlockYLocation = 0;
     @Unique private BoatEntity skipObject;
@@ -164,92 +165,88 @@ public abstract class WorldMixin {
         }
     }
 
-    @ModifyConstant(
+    @WrapOperation(
             method = "updateWeatherCycles",
-            constant = @Constant(
-                    intValue = 12000,
+            at = @At(
+                    value = "INVOKE",
+                    target = "Lnet/minecraft/world/WorldProperties;getThunderTime()I"
+            )
+    )
+    protected int quickAdditions_disableThunder(WorldProperties instance, Operation<Integer> original) {
+        if (Config.config.WEATHER_CONFIG.disableThunder) {
+            if (this.properties.getThundering()) {
+                this.properties.setThundering(false);
+            }
+            return 12000;
+        } else {
+            return original.call(instance);
+        }
+    }
+
+    @WrapOperation(
+            method = "updateWeatherCycles",
+            at = @At(
+                    value = "INVOKE",
+                    target = "Lnet/minecraft/world/WorldProperties;getRainTime()I"
+            )
+    )
+    protected int quickAdditions_disableRain(WorldProperties instance, Operation<Integer> original) {
+        if (Config.config.WEATHER_CONFIG.disableRain) {
+            if (this.properties.getRaining()) {
+                this.properties.setRaining(false);
+            }
+            return 12000;
+        } else {
+            return original.call(instance);
+        }
+    }
+
+    @WrapOperation(
+            method = "updateWeatherCycles",
+            at = @At(
+                    value = "INVOKE",
+                    target = "Lnet/minecraft/world/WorldProperties;setThunderTime(I)V",
                     ordinal = 0
             )
     )
-    protected int updateWeatherCycles_thunderDurationRandomLimit(int constant) {
-        return Config.config.WEATHER_CONFIG.thunderDurationRandomLimit;
+    protected void quickAdditions_setThunderDuration(WorldProperties instance, int thunderTime, Operation<Void> original) {
+        original.call(instance, this.random.nextInt(Config.config.WEATHER_CONFIG.thunderDurationRandomLimit) + Config.config.WEATHER_CONFIG.thunderDurationMinimum);
     }
 
-    @ModifyConstant(
+    @WrapOperation(
             method = "updateWeatherCycles",
-            constant = @Constant(
-                    intValue = 3600,
-                    ordinal = 0
-            )
-    )
-    protected int updateWeatherCycles_thunderDurationMinimum(int constant) {
-        return Config.config.WEATHER_CONFIG.thunderDurationMinimum;
-    }
-
-    @ModifyConstant(
-            method = "updateWeatherCycles",
-            constant = @Constant(
-                    intValue = 168000,
-                    ordinal = 0
-            )
-    )
-    protected int updateWeatherCycles_timeUntilThunderRandomLimit(int constant) {
-        return Config.config.WEATHER_CONFIG.timeUntilThunderRandomLimit;
-    }
-
-    @ModifyConstant(
-            method = "updateWeatherCycles",
-            constant = @Constant(
-                    intValue = 12000,
+            at = @At(
+                    value = "INVOKE",
+                    target = "Lnet/minecraft/world/WorldProperties;setThunderTime(I)V",
                     ordinal = 1
             )
     )
-    protected int updateWeatherCycles_timeUntilThunderMinimum(int constant) {
-        return Config.config.WEATHER_CONFIG.timeUntilThunderMinimum;
+    protected void quickAdditions_setTimeUntilThunder(WorldProperties instance, int thunderTime, Operation<Void> original) {
+        original.call(instance, this.random.nextInt(Config.config.WEATHER_CONFIG.timeUntilThunderRandomLimit) + Config.config.WEATHER_CONFIG.timeUntilThunderMinimum);
     }
 
-    @ModifyConstant(
+    @WrapOperation(
             method = "updateWeatherCycles",
-            constant = @Constant(
-                    intValue = 12000,
-                    ordinal = 2
+            at = @At(
+                    value = "INVOKE",
+                    target = "Lnet/minecraft/world/WorldProperties;setRainTime(I)V",
+                    ordinal = 0
             )
     )
-    protected int updateWeatherCycles_rainDurationRandomLimit(int constant) {
-        return Config.config.WEATHER_CONFIG.rainDurationRandomLimit;
+    protected void quickAdditions_setRainDuration(WorldProperties instance, int rainTime, Operation<Void> original) {
+        original.call(instance, this.random.nextInt(Config.config.WEATHER_CONFIG.rainDurationRandomLimit) + Config.config.WEATHER_CONFIG.rainDurationMinimum);
     }
 
-    @ModifyConstant(
+    @WrapOperation(
             method = "updateWeatherCycles",
-            constant = @Constant(
-                    intValue = 12000,
-                    ordinal = 3
-            )
-    )
-    protected int updateWeatherCycles_rainDurationMinimum(int constant) {
-        return Config.config.WEATHER_CONFIG.rainDurationMinimum;
-    }
-
-    @ModifyConstant(
-            method = "updateWeatherCycles",
-            constant = @Constant(
-                    intValue = 168000,
+            at = @At(
+                    value = "INVOKE",
+                    target = "Lnet/minecraft/world/WorldProperties;setRainTime(I)V",
                     ordinal = 1
             )
     )
-    protected int updateWeatherCycles_timeUntilRainRandomLimit(int constant) {
-        return Config.config.WEATHER_CONFIG.timeUntilRainRandomLimit;
-    }
-
-    @ModifyConstant(
-            method = "updateWeatherCycles",
-            constant = @Constant(
-                    intValue = 12000,
-                    ordinal = 4
-            )
-    )
-    protected int updateWeatherCycles_timeUntilRainMinimum(int constant) {
-        return Config.config.WEATHER_CONFIG.timeUntilRainMinimum;
+    protected void quickAdditions_setTimeUntilRain(WorldProperties instance, int rainTime, Operation<Void> original) {
+        original.call(instance, this.random.nextInt(Config.config.WEATHER_CONFIG.timeUntilRainRandomLimit) + Config.config.WEATHER_CONFIG.timeUntilRainMinimum);
     }
 
     @WrapOperation(

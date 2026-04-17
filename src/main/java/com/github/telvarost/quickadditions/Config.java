@@ -379,6 +379,18 @@ public class Config {
         public Integer alwaysSnowAboveThisYLevel = 100;
 
         @ConfigEntry(
+                name = "Disable Rain",
+                multiplayerSynced = true
+        )
+        public Boolean disableRain = false;
+
+        @ConfigEntry(
+                name = "Disable Thunder",
+                multiplayerSynced = true
+        )
+        public Boolean disableThunder = false;
+
+        @ConfigEntry(
                 name = "Disable Rain In Savanna Biomes",
                 description = "Restart required for changes to take effect",
                 multiplayerSynced = true
