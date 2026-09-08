@@ -18,6 +18,16 @@ Mod now works on Multiplayer with GlassConfigAPI version 3.0+ used to sync confi
   * Disabled when PumpkinMoon is installed, as PumpkinMoon will take over setting spawn group size.
 * Adds ability to change max light level at which monsters can spawn.
 
+### Sleep
+* Adds ability to exit beds by clicking or swinging the hand.
+* Adds ability to speed up night rather than skip it.
+  * Configurable speed up tick rate
+    * Default tick rate takes about 30 seconds to sleep the entire night away
+  * Ability to tick world entities and chunks during speed up
+    * For instance makes furnaces smelt faster, entities move faster, and entities make more noise as a side effect
+* Adds ability to configure percentage of sleeping players needed to skip nighttime.
+  * 0% will be treated as one player fully asleep required to skip the night.
+
 ### Weather
 * Adds ability to set a Y level above which it will always snow.
 * Adds ability to disable rain in savanna biomes.
@@ -61,11 +71,6 @@ Mod now works on Multiplayer with GlassConfigAPI version 3.0+ used to sync confi
   * Load into a world and access mod config from pause menu using [ModMenu](https://modrinth.com/mod/modmenu-beta).
   * Adding back missing achievements will not work from the main menu or when game is not running.
 * Adds ability to force display active even when tabbing away from the screen.
-* Adds ability to speed up night rather than skip it.
-  * (Takes about 30 seconds to sleep the entire night away using this method)
-* Adds ability to exit beds by clicking or swinging the hand.
-* Adds ability to configure percentage of sleeping players needed to skip nighttime.
-  * 0% will be treated as one player fully asleep required to skip the night.
 * Adds ability to configure server spawn protection radius.
   * Overridden by UniTweaks.
     * Set the value for spawn protection radius in the server.properties file instead when UniTweaks is loaded.

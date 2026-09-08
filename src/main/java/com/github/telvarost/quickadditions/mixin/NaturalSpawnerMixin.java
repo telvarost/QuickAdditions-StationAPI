@@ -22,7 +22,7 @@ public class NaturalSpawnerMixin {
             cancellable = true
     )
     private static void spawnMonstersAndWakePlayers(World world, List players, CallbackInfoReturnable<Boolean> cir) {
-        if (1.0f > Config.config.asleepPlayerPercentageForSkippingNight) {
+        if (1.0f > Config.config.SLEEP_CONFIG.asleepPlayerPercentageForSkippingNight) {
             cir.setReturnValue(false);
         }
     }

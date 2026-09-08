@@ -10,6 +10,7 @@ import net.minecraft.world.NaturalSpawner;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldProperties;
 import net.minecraft.world.biome.Biome;
+import net.minecraft.world.chunk.ChunkSource;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
@@ -46,6 +47,17 @@ public abstract class WorldMixin {
 
     @Shadow public Random random;
 
+    @Shadow protected ChunkSource chunkSource;
+
+    @Shadow
+    public abstract boolean processScheduledTicks(boolean flush);
+
+    @Shadow
+    protected abstract void manageChunkUpdatesAndEvents();
+
+    @Shadow
+    public abstract void tickEntities();
+
     @Unique private int highestBlockYLocation = 0;
     @Unique private BoatEntity skipObject;
 
@@ -55,7 +67,7 @@ public abstract class WorldMixin {
             cancellable = true
     )
     public void quickAdditions_canSkipNight(CallbackInfoReturnable<Boolean> cir) {
-        if (1.0f > Config.config.asleepPlayerPercentageForSkippingNight) {
+        if (1.0f > Config.config.SLEEP_CONFIG.asleepPlayerPercentageForSkippingNight) {
             if (this.allPlayersSleeping && !this.isRemote) {
                 int playersFullySleepingCount = 0;
 
@@ -68,7 +80,7 @@ public abstract class WorldMixin {
                 if (  ( null != this.players )
                    && ( !this.players.isEmpty() )
                    && ( 0 < playersFullySleepingCount )
-                   && ( ((float) playersFullySleepingCount / this.players.size()) >= Config.config.asleepPlayerPercentageForSkippingNight )
+                   && ( ((float) playersFullySleepingCount / this.players.size()) >= Config.config.SLEEP_CONFIG.asleepPlayerPercentageForSkippingNight )
                 ) {
                     cir.setReturnValue(true);
                 } else {
@@ -90,7 +102,7 @@ public abstract class WorldMixin {
     public boolean quickAdditions_tickCanSkipNight(World instance, Operation<Boolean> original) {
         boolean skippingNight;
 
-        if (Config.config.bedsSpeedUpNightRatherThanSkipIt) {
+        if (Config.config.SLEEP_CONFIG.bedsSpeedUpNightRatherThanSkipIt) {
             skippingNight = original.call(instance);
 
             if (skippingNight) {
@@ -102,10 +114,24 @@ public abstract class WorldMixin {
                 if (!var1) {
                     long currentTime = this.properties.getTime();
                     long desiredTime = (currentTime + 24000L) - currentTime % 24000L;
-                    long advancedTime = currentTime + 20L;
-                    this.properties.setTime(advancedTime);
 
-                    if (desiredTime < (currentTime + 20L)) {
+                    for (int chunkSourceTick = 1; chunkSourceTick < Config.config.SLEEP_CONFIG.bedsSpeedUpNightTickRate; chunkSourceTick ++)
+                    {
+                        if (Config.config.SLEEP_CONFIG.bedsSpeedUpNightTickWorld) {
+                            this.tickEntities();
+                            this.chunkSource.tick();
+                        }
+
+                        long var6 = this.properties.getTime() + 1L;
+                        this.properties.setTime(var6);
+
+                        if (Config.config.SLEEP_CONFIG.bedsSpeedUpNightTickWorld) {
+                            this.processScheduledTicks(false);
+                            this.manageChunkUpdatesAndEvents();
+                        }
+                    }
+
+                    if (desiredTime < (currentTime + Config.config.SLEEP_CONFIG.bedsSpeedUpNightTickRate)) {
                         this.afterSkipNight();
                     }
                 }
@@ -123,7 +149,7 @@ public abstract class WorldMixin {
             cancellable = true
     )
     protected void quickAdditions_updateSleepingPlayers(CallbackInfo ci) {
-        if (1.0f > Config.config.asleepPlayerPercentageForSkippingNight) {
+        if (1.0f > Config.config.SLEEP_CONFIG.asleepPlayerPercentageForSkippingNight) {
             int playersSleepingCount = 0;
 
             for (Object var2 : this.players) {
@@ -135,7 +161,7 @@ public abstract class WorldMixin {
             if (  ( null != this.players )
                && ( !this.players.isEmpty() )
                && ( 0 < playersSleepingCount )
-               && ( ((float) playersSleepingCount / this.players.size()) >= Config.config.asleepPlayerPercentageForSkippingNight)
+               && ( ((float) playersSleepingCount / this.players.size()) >= Config.config.SLEEP_CONFIG.asleepPlayerPercentageForSkippingNight)
             ) {
                 this.allPlayersSleeping = true;
             } else {

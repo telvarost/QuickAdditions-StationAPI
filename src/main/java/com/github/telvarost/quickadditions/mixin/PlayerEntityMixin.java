@@ -23,7 +23,7 @@ public abstract class PlayerEntityMixin {
             cancellable = true
     )
     public void swingHand(CallbackInfo ci) {
-        if (isSleeping() && isFullyAsleep() && Config.config.handSwingClickToExitBedsEnabled) {
+        if (isSleeping() && isFullyAsleep() && Config.config.SLEEP_CONFIG.handSwingClickToExitBedsEnabled) {
             wakeUp(false, false, false);
         }
     }

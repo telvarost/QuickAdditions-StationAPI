@@ -25,28 +25,14 @@ public class Config {
         public MusicConfig MUSIC_CONFIG = new MusicConfig();
 
         @ConfigCategory(
+                name = "Sleep Config"
+        )
+        public SleepConfig SLEEP_CONFIG = new SleepConfig();
+
+        @ConfigCategory(
                 name = "Weather Config"
         )
         public WeatherConfig WEATHER_CONFIG = new WeatherConfig();
-
-        @ConfigEntry(
-                name = "Asleep Player Percentage For Skipping Night",
-                description = "Float value between 0.0 (0%) and 1.0 (100%)",
-                multiplayerSynced = true
-        )
-        public Float asleepPlayerPercentageForSkippingNight = 1.0f;
-
-        @ConfigEntry(
-                name = "Beds Speed Up Night Rather Than Skip It",
-                multiplayerSynced = true
-        )
-        public Boolean bedsSpeedUpNightRatherThanSkipIt = false;
-
-        @ConfigEntry(
-                name = "Click Or Swing Hand To Exit Beds Enabled",
-                multiplayerSynced = true
-        )
-        public Boolean handSwingClickToExitBedsEnabled = false;
 
         @ConfigEntry(
                 name = "Force Display Active",
@@ -362,6 +348,43 @@ public class Config {
                 maxLength = 1
         )
         public Float volumeCaveAmbient = 1.0F;
+    }
+
+    public static class SleepConfig {
+        @ConfigEntry(
+                name = "Asleep Player Percentage For Skipping Night",
+                description = "Float value between 0.0 (0%) and 1.0 (100%)",
+                multiplayerSynced = true
+        )
+        public Float asleepPlayerPercentageForSkippingNight = 1.0f;
+
+        @ConfigEntry(
+                name = "Beds Speed Up Night Rather Than Skip It",
+                multiplayerSynced = true
+        )
+        public Boolean bedsSpeedUpNightRatherThanSkipIt = false;
+
+        @ConfigEntry(
+                name = "Beds Speed Up Night Tick Rate",
+                description = "1 = normal speed",
+                multiplayerSynced = true,
+                minLength = 1,
+                maxLength = 100
+        )
+        public Integer bedsSpeedUpNightTickRate = 20;
+
+        @ConfigEntry(
+                name = "Beds Speed Up Night Tick World",
+                description = "Night speed up ticks world as well",
+                multiplayerSynced = true
+        )
+        public Boolean bedsSpeedUpNightTickWorld = true;
+
+        @ConfigEntry(
+                name = "Click Or Swing Hand To Exit Beds Enabled",
+                multiplayerSynced = true
+        )
+        public Boolean handSwingClickToExitBedsEnabled = true;
     }
 
     public static class WeatherConfig {
